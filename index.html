@@ -45,7 +45,7 @@
   .topbar {
     background: var(--ts-black);
     color: #fff;
-    position: sticky; top: 0; z-index: 20;
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
     border-bottom: 3px solid var(--ts-cyan);
   }
   .topbar-inner {
@@ -64,6 +64,7 @@
   }
   .btn-ghost { background: transparent; border-color: rgba(255,255,255,.22); color: #fff; }
   .btn-ghost:hover { border-color: var(--ts-cyan); color: var(--ts-cyan); }
+  .btn-ghost[data-armed] { border-color: #F2A39A; color: #FFD3CD; background: rgba(192,57,43,.25); }
   .btn-primary { background: var(--ts-cyan); color: var(--ts-black); }
   .btn-primary:hover { filter: brightness(1.08); }
   .btn-soft { background: var(--surface-2); border-color: var(--line); color: var(--ts-navy); }
@@ -916,7 +917,14 @@
       state[t.dataset.del].splice(+t.dataset.i, 1); renderList(t.dataset.del); update(); return;
     }
     if (t.id === 'btnReset') {
-      if (confirm('Limpar todos os dados da proposta?')) { state = defaultState(); renderAll(); toast('Proposta limpa'); }
+      // Confirmação em dois cliques (sem diálogo do navegador)
+      if (t.dataset.armed) {
+        clearTimeout(t._disarm); delete t.dataset.armed; t.textContent = 'Limpar tudo';
+        state = defaultState(); renderAll(); toast('Proposta limpa');
+      } else {
+        t.dataset.armed = '1'; t.textContent = 'Confirmar limpeza?';
+        t._disarm = setTimeout(() => { delete t.dataset.armed; t.textContent = 'Limpar tudo'; }, 3000);
+      }
       return;
     }
     if (t.id === 'btnCopy' || t.id === 'btnCopyTop') { copy(summaryText(), 'Resumo copiado'); return; }
