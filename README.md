@@ -5,7 +5,7 @@ Abra o arquivo no navegador — não precisa de build nem servidor.
 
 ## Etapas
 
-1. **Dados do cliente** — empresa, responsável, contatos e plano (Launch, Scale, Prime; valor editável para desconto).
+1. **Dados do cliente** — empresa, responsável, contatos, plano (Launch, Scale, Prime; valor editável para desconto) e Gestão Estratégica opcional (mensal).
 2. **Setup** — escopo padrão de ativação já preenchido (editável, com itens extras) e valor único.
 3. **Usuários, dispositivos e agentes de IA adicionais** — seção recolhida; recorrente mensal.
 4. **Implantação de Agentes de IA** — lista de agentes, valor único por agente.
@@ -17,4 +17,4 @@ total do 1º mês e projeções. Botões: **Gerar PDF** (proposta formatada para
 **Copiar resumo** (texto pronto para WhatsApp/e-mail) e **Copiar tabela** (para Excel/Sheets).
 
 Os dados ficam salvos no navegador (localStorage). Preços padrão estão no topo do `<script>`
-(`PLANS`, `ADDONS`, `LISTS`, `SETUP_DEFAULT`).
+(`PLANS`, `ADDONS`, `LISTS`, `SETUP_DEFAULT`); o valor padrão da Gestão Estratégica fica em `defaultState()`.

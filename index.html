@@ -167,6 +167,25 @@
   }
   .plan.active .radio { border-color: var(--ts-cyan); box-shadow: inset 0 0 0 4px #fff; background: var(--ts-cyan); }
 
+  /* Gestão Estratégica */
+  .gestao {
+    margin-top: 18px; display: grid; grid-template-columns: auto minmax(0, 1fr) 180px; gap: 14px; align-items: center;
+    padding: 14px 16px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--surface-2); transition: .15s;
+  }
+  .gestao.on { border-color: var(--ts-cyan); background: #F0FAFD; }
+  .gestao h3 { margin: 0; font-size: 15px; font-weight: 600; color: var(--ts-navy); }
+  .gestao p { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); }
+  .gestao .money { background: #fff; }
+  .gestao:not(.on) .money { opacity: .5; }
+  .switch { position: relative; width: 44px; height: 24px; flex: none; cursor: pointer; }
+  .switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .switch i { position: absolute; inset: 0; border-radius: 99px; background: #C4D0D6; transition: .2s; pointer-events: none; }
+  .switch i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .switch input:checked + i { background: var(--ts-cyan); }
+  .switch input:checked + i::after { transform: translateX(20px); }
+  .switch input:focus-visible + i { box-shadow: 0 0 0 3px rgba(0,96,171,.25); }
+  @media (max-width: 640px) { .gestao { grid-template-columns: auto minmax(0, 1fr); } .gestao .money { grid-column: 1 / -1; } }
+
   /* Checklist do setup */
   .checklist { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
   .check {
@@ -378,6 +397,17 @@
             <p class="hint">Editável para aplicar desconto na negociação.</p>
           </label>
         </div>
+
+        <div class="gestao" id="gestaoBox">
+          <label class="switch" title="Incluir Gestão Estratégica">
+            <input type="checkbox" id="gestaoOn" aria-label="Incluir Gestão Estratégica"><i></i>
+          </label>
+          <div>
+            <h3>Gestão Estratégica</h3>
+            <p>Acompanhamento estratégico mensal pelo time The Seller</p>
+          </div>
+          <div class="money"><em>R$</em><input type="number" min="0" step="1" data-bind="gestao.valor" data-num aria-label="Valor mensal da Gestão Estratégica"><em>/mês</em></div>
+        </div>
       </div>
     </section>
 
@@ -586,6 +616,7 @@
     setup: { valor: 2997, prazo: '', itens: SETUP_DEFAULT.map(t => ({ t, on: true })) },
     addons: Object.fromEntries(ADDONS.map(a => [a.key, { q: 0, v: a.price }])),
     ia: [], auto: [], int: [],
+    gestao: { on: false, valor: 497 },
     pagamento: { parcelas: 1, desconto: 0 },
     obs: '',
   });
@@ -644,11 +675,12 @@
     const discPct = Math.min(100, Math.max(0, num(state.pagamento.desconto)));
     const discount = oneTimeGross * discPct / 100;
     const oneTime = oneTimeGross - discount;
-    const monthly = planValue + addonsTotal + intMonthly;
+    const gestao = state.gestao.on ? num(state.gestao.valor) : 0;
+    const monthly = planValue + gestao + addonsTotal + intMonthly;
     const parcelas = Math.max(1, Math.round(num(state.pagamento.parcelas)));
     const parcela = oneTime / parcelas;
 
-    return { plan, planValue, addonLines, addonsTotal, intMonthly, setup, ia, auto, integ,
+    return { plan, planValue, gestao, addonLines, addonsTotal, intMonthly, setup, ia, auto, integ,
              oneTimeGross, discPct, discount, oneTime, monthly, parcelas, parcela,
              firstMonth: oneTime + monthly, firstPayment: parcela + monthly };
   }
@@ -664,6 +696,11 @@
         <span class="radio" aria-hidden="true"></span>
       </button>`).join('');
     $('#planPrice').value = state.planoValor[state.plano];
+  }
+
+  function renderGestao() {
+    $('#gestaoOn').checked = !!state.gestao.on;
+    $('#gestaoBox').classList.toggle('on', !!state.gestao.on);
   }
 
   function renderSetup() {
@@ -772,6 +809,7 @@
     // Recorrente
     const recRows = [[`Plano ${p.name}`, c.planValue]];
     c.addonLines.filter(l => l.q).forEach(l => recRows.push([`${l.q}× ${l.title}`, l.total]));
+    if (state.gestao.on) recRows.push(['Gestão Estratégica', c.gestao]);
     if (c.intMonthly) recRows.push(['Manutenção de integrações', c.intMonthly]);
     $('#sRecurring').innerHTML = `<h4>Recorrente mensal</h4>` +
       recRows.map(([l, v]) => row(l, v)).join('') + row('Total mensal', c.monthly, 'sum');
@@ -802,7 +840,7 @@
   }
 
   function renderAll() {
-    renderPlans(); renderSetup(); renderAddons(); renderInstallments();
+    renderPlans(); renderGestao(); renderSetup(); renderAddons(); renderInstallments();
     Object.keys(LISTS).forEach(renderList);
     bindValues(); update();
   }
@@ -839,6 +877,7 @@
       update();
     }
     if (el.id === 'installments') { state.pagamento.parcelas = +el.value; update(); }
+    if (el.id === 'gestaoOn') { state.gestao.on = el.checked; renderGestao(); update(); }
   });
 
   document.addEventListener('click', e => {
@@ -903,6 +942,7 @@
   function lineItems() {
     const c = calc();
     const rec = [[`Plano ${c.plan.name}`, '', c.planValue]];
+    if (state.gestao.on) rec.push(['Gestão Estratégica', 'Acompanhamento estratégico mensal pelo time The Seller', c.gestao]);
     c.addonLines.filter(l => l.q).forEach(l => rec.push([l.title, `${l.q} × ${brl(l.v)}`, l.total]));
     state.int.filter(i => num(i.mensal)).forEach(i => rec.push([`Manutenção integração · ${i.nome || 'Integração'}`, '', num(i.mensal)]));
     const one = [['Setup · Ativação e configuração', '', c.setup]];
