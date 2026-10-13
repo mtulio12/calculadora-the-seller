@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de Proposta · The Seller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Paleta oficial (Manual de Marca The Seller) */
+  :root {
+    --ts-black: #161F28;
+    --ts-navy: #16274A;
+    --ts-cyan: #00B1E2;
+    --ts-blue: #0060AB;
+    --ts-mist: #DCE4E2;
+
+    --bg: #EEF2F1;
+    --surface: #FFFFFF;
+    --surface-2: #F6F8F8;
+    --line: #DCE4E2;
+    --text: #161F28;
+    --muted: #5B6B78;
+    --accent: var(--ts-blue);
+    --accent-strong: var(--ts-cyan);
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(22, 31, 40, .06), 0 6px 24px rgba(22, 39, 74, .06);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .num, .total { font-family: "Poppins", "DM Sans", sans-serif; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+
+  /* ---------- Topo ---------- */
+  .topbar {
+    background: var(--ts-black);
+    color: #fff;
+    position: sticky; top: 0; z-index: 20;
+    border-bottom: 3px solid var(--ts-cyan);
+  }
+  .topbar-inner {
+    max-width: 1320px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  }
+  .topbar img { height: 26px; display: block; }
+  .topbar .sep { width: 1px; height: 26px; background: rgba(255,255,255,.2); }
+  .topbar h1 { font-size: 16px; font-weight: 500; margin: 0; letter-spacing: .01em; color: var(--ts-mist); }
+  .topbar .actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .btn {
+    border: 1px solid transparent; border-radius: 10px; padding: 9px 16px;
+    font-weight: 600; font-size: 14px; cursor: pointer; transition: .15s;
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+  }
+  .btn-ghost { background: transparent; border-color: rgba(255,255,255,.22); color: #fff; }
+  .btn-ghost:hover { border-color: var(--ts-cyan); color: var(--ts-cyan); }
+  .btn-primary { background: var(--ts-cyan); color: var(--ts-black); }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-soft { background: var(--surface-2); border-color: var(--line); color: var(--ts-navy); }
+  .btn-soft:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-sm { padding: 6px 12px; font-size: 13px; border-radius: 8px; }
+  .btn-icon {
+    background: transparent; border: 1px solid var(--line); border-radius: 8px;
+    width: 36px; height: 38px; cursor: pointer; color: var(--muted); flex: none;
+  }
+  .btn-icon:hover { color: #C0392B; border-color: #E8B4AE; background: #FDF3F2; }
+
+  /* ---------- Layout ---------- */
+  .layout {
+    max-width: 1320px; margin: 0 auto; padding: 28px 24px 64px;
+    display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 28px; align-items: start;
+  }
+  @media (max-width: 1000px) {
+    .layout { grid-template-columns: 1fr; padding: 20px 16px 48px; }
+  }
+
+  /* ---------- Etapas ---------- */
+  .steps { display: flex; flex-direction: column; gap: 18px; }
+  .step {
+    background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow);
+    border: 1px solid var(--line); overflow: hidden;
+  }
+  .step-head {
+    display: flex; align-items: center; gap: 14px; padding: 18px 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .step-num {
+    flex: none; width: 38px; height: 38px; border-radius: 10px;
+    background: var(--ts-navy); color: var(--ts-cyan);
+    display: grid; place-items: center; font-family: "Poppins"; font-weight: 600; font-size: 15px;
+  }
+  .step-title { flex: 1; min-width: 0; }
+  .step-title h2 { margin: 0; font-size: 17px; font-weight: 600; color: var(--ts-navy); }
+  .step-title p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .step-sub {
+    font-family: "Poppins"; font-weight: 600; color: var(--ts-blue); font-size: 15px; white-space: nowrap;
+  }
+  .step-body { padding: 20px 22px 22px; }
+
+  details.step > summary { list-style: none; cursor: pointer; }
+  details.step > summary::-webkit-details-marker { display: none; }
+  details.step:not([open]) > summary { border-bottom-color: transparent; }
+  .chev {
+    flex: none; width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center;
+    background: var(--surface-2); color: var(--ts-navy); transition: transform .2s;
+  }
+  details[open] > summary .chev { transform: rotate(180deg); }
+
+  /* ---------- Campos ---------- */
+  .grid { display: grid; gap: 14px; }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  @media (max-width: 640px) { .g2, .g3 { grid-template-columns: 1fr; } }
+
+  label.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .field > span {
+    font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted);
+  }
+  .input, .money {
+    width: 100%; background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 12px; outline: none; transition: .15s; min-width: 0;
+  }
+  .input:focus, .money:focus-within { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(0,96,171,.12); }
+  .money { display: flex; align-items: center; gap: 6px; padding: 0 12px; }
+  .money em { font-style: normal; color: var(--muted); font-size: 13px; }
+  .money input { border: 0; background: transparent; outline: none; padding: 10px 0; width: 100%; min-width: 0; }
+  textarea.input { resize: vertical; min-height: 64px; }
+  .hint { font-size: 12.5px; color: var(--muted); margin: 6px 0 0; }
+
+  .sub-title {
+    font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ts-blue); margin: 22px 0 12px; display: flex; align-items: center; gap: 10px;
+  }
+  .sub-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .sub-title:first-child { margin-top: 0; }
+
+  /* Planos */
+  .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 760px) { .plans { grid-template-columns: 1fr; } }
+  .plan {
+    position: relative; text-align: left; cursor: pointer; border-radius: 12px; padding: 14px 16px;
+    border: 1.5px solid var(--line); background: var(--surface-2); transition: .15s;
+  }
+  .plan:hover { border-color: #9DB7CB; }
+  .plan.active { border-color: var(--ts-cyan); background: #F0FAFD; box-shadow: 0 0 0 3px rgba(0,177,226,.15); }
+  .plan .name { font-family: "Poppins"; font-weight: 600; font-size: 15px; color: var(--ts-navy); }
+  .plan .price { font-family: "Poppins"; font-weight: 700; font-size: 20px; margin: 4px 0 2px; color: var(--ts-black); }
+  .plan .price small { font-size: 12px; font-weight: 500; color: var(--muted); }
+  .plan .feat { font-size: 12.5px; color: var(--muted); padding-right: 22px; }
+  .plan .tag {
+    position: absolute; top: 12px; right: 12px; font-size: 11px; font-weight: 700;
+    background: var(--ts-cyan); color: var(--ts-black); padding: 2px 8px; border-radius: 99px;
+  }
+  .plan .radio {
+    position: absolute; bottom: 14px; right: 14px; width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid #B7C6CF;
+  }
+  .plan.active .radio { border-color: var(--ts-cyan); box-shadow: inset 0 0 0 4px #fff; background: var(--ts-cyan); }
+
+  /* Checklist do setup */
+  .checklist { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .check {
+    display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px;
+    border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2);
+  }
+  .check input[type=checkbox] { accent-color: var(--ts-blue); width: 18px; height: 18px; margin: 2px 0 0; flex: none; cursor: pointer; }
+  .check .txt {
+    flex: 1; border: 0; background: transparent; outline: none; padding: 0; min-width: 0;
+    resize: none; overflow: hidden; line-height: 1.45;
+  }
+  .check.off .txt { color: #9AA8B2; text-decoration: line-through; }
+  .check .del { border: 0; background: none; color: #A3B1BB; cursor: pointer; font-size: 18px; line-height: 1; padding: 0 2px; }
+  .check .del:hover { color: #C0392B; }
+
+  /* Adicionais */
+  .addon {
+    display: grid; grid-template-columns: minmax(0, 1.4fr) 140px 200px minmax(110px, auto);
+    gap: 14px; align-items: end; padding: 14px 0; border-bottom: 1px dashed var(--line);
+  }
+  .addon:first-child { padding-top: 0; }
+  .addon:last-child { border-bottom: 0; padding-bottom: 0; }
+  .addon h3 { margin: 0; font-size: 15px; font-weight: 600; color: var(--ts-navy); }
+  .addon p { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); }
+  .addon .line-total { text-align: right; font-family: "Poppins"; font-weight: 600; padding-bottom: 10px; color: var(--ts-blue); }
+  @media (max-width: 760px) {
+    .addon { grid-template-columns: 1fr 1fr; }
+    .addon > :first-child, .addon .line-total { grid-column: 1 / -1; text-align: left; }
+  }
+
+  .stepper { display: flex; align-items: stretch; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface-2); }
+  .stepper button { width: 36px; border: 0; background: transparent; cursor: pointer; font-size: 18px; color: var(--ts-navy); }
+  .stepper button:hover { background: var(--line); }
+  .stepper input { width: 100%; min-width: 0; text-align: center; border: 0; background: transparent; outline: none; padding: 10px 0; }
+
+  /* Listas dinâmicas (IA, automações, integrações) */
+  .items { display: flex; flex-direction: column; gap: 10px; }
+  .item {
+    display: grid; gap: 10px; align-items: start;
+    grid-template-columns: minmax(0, 1fr) 160px 36px;
+    padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2);
+  }
+  .item.with-monthly { grid-template-columns: minmax(0, 1fr) 150px 150px 36px; }
+  .item .col { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .item .input, .item .money { background: #fff; }
+  .item .mini { font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-bottom: -4px; }
+  @media (max-width: 640px) {
+    .item, .item.with-monthly { grid-template-columns: 1fr 1fr; }
+    .item .col:first-child { grid-column: 1 / -1; }
+    .item .btn-icon { justify-self: end; grid-column: 1 / -1; width: auto; padding: 0 12px; }
+  }
+  .empty {
+    border: 1.5px dashed var(--line); border-radius: 12px; padding: 18px; text-align: center; color: var(--muted); font-size: 13.5px;
+  }
+  .list-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
+  .quick { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    border: 1px solid var(--line); background: #fff; border-radius: 99px; padding: 4px 10px;
+    font-size: 12.5px; cursor: pointer; color: var(--ts-navy);
+  }
+  .chip:hover { border-color: var(--ts-cyan); color: var(--ts-blue); }
+
+  /* ---------- Resumo ---------- */
+  .summary {
+    position: sticky; top: 84px;
+    background: var(--ts-navy); color: #fff; border-radius: 18px; overflow: hidden;
+    box-shadow: 0 18px 40px rgba(22, 39, 74, .25);
+  }
+  @media (max-width: 1000px) { .summary { position: static; } }
+  .summary-head { padding: 20px 22px 16px; background: linear-gradient(135deg, #1B3260 0%, var(--ts-navy) 60%); }
+  .summary-head .eyebrow { font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ts-cyan); font-weight: 700; }
+  .summary-head .client { font-family: "Poppins"; font-size: 19px; font-weight: 600; margin-top: 4px; word-break: break-word; }
+  .summary-head .meta { font-size: 13px; color: #A9BBD0; margin-top: 2px; }
+  .summary-body { padding: 4px 22px 22px; }
+  .s-group { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .s-group h4 {
+    margin: 0 0 8px; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: #8FA6C1; font-weight: 700;
+    display: flex; justify-content: space-between;
+  }
+  .s-row { display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; padding: 3px 0; color: #DCE4E2; }
+  .s-row span:last-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .s-row.sum { color: #fff; font-weight: 700; padding-top: 8px; font-size: 14.5px; }
+  .s-row.sum span:last-child { color: var(--ts-cyan); font-family: "Poppins"; }
+  .s-empty { font-size: 13px; color: #7F93AB; }
+
+  .hero {
+    margin-top: 16px; border-radius: 14px; padding: 16px 18px;
+    background: rgba(0,177,226,.1); border: 1px solid rgba(0,177,226,.35);
+  }
+  .hero .label { font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ts-cyan); font-weight: 700; }
+  .hero .total { font-size: 30px; font-weight: 700; color: #fff; line-height: 1.2; margin-top: 2px; }
+  .hero .note { font-size: 12.5px; color: #A9BBD0; }
+
+  .pay { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pay label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #8FA6C1; font-weight: 700; }
+  .pay select, .pay input {
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15); border-radius: 8px;
+    color: #fff; padding: 8px 10px; outline: none; font-size: 14px; text-transform: none; letter-spacing: 0; font-weight: 500;
+  }
+  .pay select option { color: var(--ts-black); }
+  .pay-note { font-size: 12.5px; color: #A9BBD0; margin-top: 8px; }
+  .proj { margin-top: 14px; }
+  .proj .s-row { color: #A9BBD0; font-size: 13px; }
+
+  .s-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 18px; }
+  .s-actions .btn { justify-content: center; }
+  .s-actions .btn-primary { grid-column: 1 / -1; padding: 12px; }
+  .btn-outline-light { background: transparent; color: #fff; border-color: rgba(255,255,255,.22); }
+  .btn-outline-light:hover { border-color: var(--ts-cyan); color: var(--ts-cyan); }
+  .foot-note { text-align: center; font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 20px); opacity: 0;
+    background: var(--ts-black); color: #fff; padding: 10px 18px; border-radius: 10px; font-size: 14px;
+    transition: .25s; pointer-events: none; z-index: 50; border-left: 3px solid var(--ts-cyan);
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* ---------- Proposta para impressão ---------- */
+  #print { display: none; }
+  @media print {
+    @page { size: A4; margin: 14mm 14mm 16mm; }
+    body { background: #fff; font-size: 11pt; }
+    .topbar, .layout, .toast { display: none !important; }
+    #print { display: block; color: var(--ts-black); }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  .p-head {
+    background: var(--ts-black); color: #fff; border-radius: 10px; padding: 18px 22px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    border-bottom: 4px solid var(--ts-cyan);
+  }
+  .p-head img { height: 22px; }
+  .p-head .r { text-align: right; font-size: 9.5pt; color: var(--ts-mist); }
+  .p-head .r strong { display: block; font-family: "Poppins"; font-size: 13pt; color: #fff; }
+  .p-client { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 18px; margin: 16px 0 6px; font-size: 10pt; }
+  .p-client div span { display: block; font-size: 8pt; letter-spacing: .08em; text-transform: uppercase; color: #6B7B88; font-weight: 700; }
+  .p-sec { margin-top: 16px; break-inside: avoid; }
+  .p-sec h3 {
+    font-size: 11pt; margin: 0 0 6px; color: var(--ts-navy); display: flex; gap: 8px; align-items: center;
+    border-bottom: 2px solid var(--ts-mist); padding-bottom: 5px;
+  }
+  .p-sec h3 b { color: var(--ts-cyan); font-weight: 700; }
+  .p-sec ul { margin: 6px 0 0; padding-left: 18px; font-size: 10pt; }
+  .p-sec li { margin: 2px 0; }
+  .p-table { width: 100%; border-collapse: collapse; font-size: 10pt; }
+  .p-table td, .p-table th { padding: 6px 4px; border-bottom: 1px solid #E6ECEB; text-align: left; vertical-align: top; }
+  .p-table th { font-size: 8pt; letter-spacing: .06em; text-transform: uppercase; color: #6B7B88; }
+  .p-table td.v, .p-table th.v { text-align: right; white-space: nowrap; }
+  .p-table td small { color: #6B7B88; display: block; }
+  .p-totals { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; break-inside: avoid; }
+  .p-totals div { border-radius: 10px; padding: 12px 14px; background: #F2F6F5; }
+  .p-totals div.main { background: var(--ts-navy); color: #fff; }
+  .p-totals span { display: block; font-size: 8pt; letter-spacing: .08em; text-transform: uppercase; color: #6B7B88; font-weight: 700; }
+  .p-totals div.main span { color: var(--ts-cyan); }
+  .p-totals strong { font-family: "Poppins"; font-size: 15pt; }
+  .p-totals small { display: block; font-size: 8.5pt; color: #6B7B88; }
+  .p-totals div.main small { color: #A9BBD0; }
+  .p-obs { margin-top: 14px; font-size: 9.5pt; color: #3E4C57; white-space: pre-wrap; }
+  .p-foot { margin-top: 20px; font-size: 8.5pt; color: #6B7B88; border-top: 1px solid #E6ECEB; padding-top: 8px; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <img src="assets/logo-the-seller.png" alt="The Seller">
+    <span class="sep" aria-hidden="true"></span>
+    <h1>Calculadora de Proposta</h1>
+    <div class="actions">
+      <button class="btn btn-ghost" id="btnReset" type="button">Limpar tudo</button>
+      <button class="btn btn-ghost" id="btnCopyTop" type="button">Copiar resumo</button>
+      <button class="btn btn-primary" id="btnPrintTop" type="button">Gerar PDF</button>
+    </div>
+  </div>
+</header>
+
+<main class="layout">
+  <div class="steps">
+
+    <!-- 01 · Dados do cliente -->
+    <section class="step">
+      <div class="step-head">
+        <div class="step-num">01</div>
+        <div class="step-title">
+          <h2>Dados do cliente</h2>
+          <p>Quem recebe a proposta e qual plano será contratado</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="sub-title">Cliente</div>
+        <div class="grid g2">
+          <label class="field"><span>Empresa</span><input class="input" data-bind="cliente.empresa" placeholder="Ex: Clínica Bem Estar"></label>
+          <label class="field"><span>Responsável</span><input class="input" data-bind="cliente.responsavel" placeholder="Ex: Marina Lamony"></label>
+          <label class="field"><span>E-mail</span><input class="input" type="email" data-bind="cliente.email" placeholder="contato@empresa.com.br"></label>
+          <label class="field"><span>WhatsApp / Telefone</span><input class="input" data-bind="cliente.telefone" placeholder="(11) 90000-0000"></label>
+          <label class="field"><span>CNPJ</span><input class="input" data-bind="cliente.cnpj" placeholder="00.000.000/0000-00"></label>
+          <label class="field"><span>Segmento</span><input class="input" data-bind="cliente.segmento" placeholder="Ex: Saúde, Imobiliário, Educação"></label>
+          <label class="field"><span>Consultor The Seller</span><input class="input" data-bind="cliente.consultor" placeholder="Seu nome"></label>
+          <label class="field"><span>Validade da proposta (dias)</span><input class="input" type="number" min="1" data-bind="cliente.validade" data-num></label>
+        </div>
+
+        <div class="sub-title">Plano</div>
+        <div class="plans" id="plans"></div>
+        <div class="grid g2" style="margin-top:14px">
+          <label class="field">
+            <span>Valor mensal do plano</span>
+            <div class="money"><em>R$</em><input type="number" min="0" step="1" id="planPrice"></div>
+            <p class="hint">Editável para aplicar desconto na negociação.</p>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 · Setup -->
+    <section class="step">
+      <div class="step-head">
+        <div class="step-num">02</div>
+        <div class="step-title">
+          <h2>Setup · Ativação e configuração</h2>
+          <p>Escopo padrão da ativação. Desmarque ou edite o que não se aplica.</p>
+        </div>
+        <div class="step-sub" id="setupSub"></div>
+      </div>
+      <div class="step-body">
+        <ul class="checklist" id="setupList"></ul>
+        <div class="list-foot">
+          <button class="btn btn-soft btn-sm" type="button" id="addSetupItem">+ Adicionar item ao escopo</button>
+          <button class="btn btn-soft btn-sm" type="button" id="restoreSetup">Restaurar escopo padrão</button>
+        </div>
+        <div class="grid g2" style="margin-top:18px">
+          <label class="field">
+            <span>Valor do setup (único)</span>
+            <div class="money"><em>R$</em><input type="number" min="0" step="1" data-bind="setup.valor" data-num></div>
+          </label>
+          <label class="field">
+            <span>Prazo estimado de ativação</span>
+            <input class="input" data-bind="setup.prazo" placeholder="Ex: até 15 dias úteis">
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 · Adicionais (fechado por padrão) -->
+    <details class="step" id="addonsBox">
+      <summary class="step-head">
+        <div class="step-num">03</div>
+        <div class="step-title">
+          <h2>Usuários, dispositivos e agentes de IA adicionais</h2>
+          <p id="addonsHint">Além do que o plano já inclui · recorrente mensal</p>
+        </div>
+        <div class="step-sub" id="addonsSub"></div>
+        <div class="chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></div>
+      </summary>
+      <div class="step-body" id="addons"></div>
+    </details>
+
+    <!-- 04 · Implantação de Agentes de IA -->
+    <section class="step">
+      <div class="step-head">
+        <div class="step-num">04</div>
+        <div class="step-title">
+          <h2>Implantação de Agentes de IA</h2>
+          <p>Desenvolvimento, treinamento e publicação de cada agente · valor único</p>
+        </div>
+        <div class="step-sub" id="iaSub"></div>
+      </div>
+      <div class="step-body">
+        <div class="items" id="iaList"></div>
+        <div class="list-foot">
+          <button class="btn btn-soft btn-sm" type="button" data-add="ia">+ Adicionar agente</button>
+          <div class="quick" data-quick="ia"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 · Implantação de Automações -->
+    <section class="step">
+      <div class="step-head">
+        <div class="step-num">05</div>
+        <div class="step-title">
+          <h2>Implantação de Automações</h2>
+          <p>Fluxos automáticos de cadência, follow-up, distribuição e afins · valor único</p>
+        </div>
+        <div class="step-sub" id="autoSub"></div>
+      </div>
+      <div class="step-body">
+        <div class="items" id="autoList"></div>
+        <div class="list-foot">
+          <button class="btn btn-soft btn-sm" type="button" data-add="auto">+ Adicionar automação</button>
+          <div class="quick" data-quick="auto"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 · Integrações -->
+    <section class="step">
+      <div class="step-head">
+        <div class="step-num">06</div>
+        <div class="step-title">
+          <h2>Integrações</h2>
+          <p>Conexão com sistemas externos · implantação única e, se houver, manutenção mensal</p>
+        </div>
+        <div class="step-sub" id="intSub"></div>
+      </div>
+      <div class="step-body">
+        <div class="items" id="intList"></div>
+        <div class="list-foot">
+          <button class="btn btn-soft btn-sm" type="button" data-add="int">+ Adicionar integração</button>
+          <div class="quick" data-quick="int"></div>
+        </div>
+
+        <div class="sub-title">Observações da proposta</div>
+        <textarea class="input" data-bind="obs" rows="3" placeholder="Condições especiais, prazos, premissas, etc. (aparece no PDF)"></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- Resumo -->
+  <aside>
+    <div class="summary">
+      <div class="summary-head">
+        <div class="eyebrow">Resumo da proposta</div>
+        <div class="client" id="sClient">Cliente</div>
+        <div class="meta" id="sMeta"></div>
+      </div>
+      <div class="summary-body">
+        <div class="s-group" id="sRecurring"></div>
+        <div class="s-group" id="sOneTime"></div>
+
+        <div class="hero">
+          <div class="label">Total no 1º mês</div>
+          <div class="total" id="sFirst">R$ 0,00</div>
+          <div class="note">Implantação + 1ª mensalidade</div>
+        </div>
+
+        <div class="pay">
+          <label>Implantação em
+            <select id="installments"></select>
+          </label>
+          <label>Desconto implantação (%)
+            <input type="number" min="0" max="100" step="1" data-bind="pagamento.desconto" data-num>
+          </label>
+        </div>
+        <div class="pay-note" id="payNote"></div>
+
+        <div class="proj" id="sProj"></div>
+
+        <div class="s-actions">
+          <button class="btn btn-primary" id="btnPrint" type="button">Gerar proposta em PDF</button>
+          <button class="btn btn-outline-light btn-sm" id="btnCopy" type="button">Copiar resumo</button>
+          <button class="btn btn-outline-light btn-sm" id="btnTsv" type="button">Copiar tabela</button>
+        </div>
+      </div>
+    </div>
+    <p class="foot-note">Os valores atualizam em tempo real e ficam salvos neste navegador.</p>
+  </aside>
+</main>
+
+<div id="print"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  /* ===================== Configuração ===================== */
+  const PLANS = {
+    launch: { name: 'Launch', price: 547,  tag: '',              users: 2, devices: '1 WhatsApp Business + 1 WhatsApp API', ias: 1,  feat: '2 usuários · 1 funil · 1 IA · 50k contatos' },
+    scale:  { name: 'Scale',  price: 797,  tag: 'Mais popular',  users: 4, devices: '2 WhatsApp Business + 1 WhatsApp API', ias: 5,  feat: '4 usuários · 3 funis · 5 IAs · 150k contatos' },
+    prime:  { name: 'Prime',  price: 1597, tag: '',              users: 6, devices: '3 WhatsApp Business + 2 WhatsApp API', ias: 10, feat: '6 usuários · 10 funis · 10 IAs · 250k contatos · API' },
+  };
+
+  const SETUP_DEFAULT = [
+    'Configuração e integração do número de WhatsApp junto à Meta;',
+    'Parametrização da conta e dos acessos na plataforma;',
+    'Importação e organização da base de contatos;',
+    'Configuração inicial de funis, etapas e campos personalizados;',
+    'Treinamento da equipe para utilização do CRM, atendimento e principais funcionalidades;',
+    'Acompanhamento durante o processo de ativação para garantir o correto funcionamento da operação.',
+  ];
+
+  const ADDONS = [
+    { key: 'usuarios',     title: 'Usuários adicionais',     unit: 'usuário',     price: 87,  incl: p => `${p.name} inclui até ${p.users} usuários` },
+    { key: 'dispositivos', title: 'Dispositivos adicionais', unit: 'dispositivo', price: 97,  incl: p => `${p.name} inclui ${p.devices}` },
+    { key: 'agentes',      title: 'Agentes de IA adicionais', unit: 'agente',     price: 197, incl: p => `${p.name} inclui ${p.ias} ${p.ias === 1 ? 'agente' : 'agentes'} de IA` },
+  ];
+
+  const LISTS = {
+    ia: {
+      el: 'iaList', sub: 'iaSub', price: 2997, monthly: false,
+      label: 'Agente de IA', placeholder: 'Ex: SDR de qualificação de leads',
+      descPlaceholder: 'Objetivo, canais, base de conhecimento…',
+      empty: 'Nenhum agente de IA na proposta.',
+      quick: ['SDR / Qualificação', 'Atendimento / Suporte', 'Agendamento', 'Recuperação de vendas'],
+    },
+    auto: {
+      el: 'autoList', sub: 'autoSub', price: 997, monthly: false,
+      label: 'Automação', placeholder: 'Ex: Follow-up de leads sem resposta',
+      descPlaceholder: 'Gatilho, etapas e mensagens…',
+      empty: 'Nenhuma automação na proposta.',
+      quick: ['Follow-up', 'Distribuição de leads', 'Lembrete de agendamento', 'Pós-venda / NPS'],
+    },
+    int: {
+      el: 'intList', sub: 'intSub', price: 1497, monthly: true,
+      label: 'Integração', placeholder: 'Ex: RD Station, Hotmart, ERP…',
+      descPlaceholder: 'O que será sincronizado e em qual sentido…',
+      empty: 'Nenhuma integração na proposta.',
+      quick: ['RD Station', 'Google Agenda', 'Hotmart', 'Webhook / API'],
+    },
+  };
+
+  const STORE_KEY = 'ts-calculadora-proposta-v1';
+
+  const defaultState = () => ({
+    cliente: { empresa: '', responsavel: '', email: '', telefone: '', cnpj: '', segmento: '', consultor: '', validade: 7 },
+    plano: 'scale',
+    planoValor: Object.fromEntries(Object.entries(PLANS).map(([k, p]) => [k, p.price])),
+    setup: { valor: 2997, prazo: '', itens: SETUP_DEFAULT.map(t => ({ t, on: true })) },
+    addons: Object.fromEntries(ADDONS.map(a => [a.key, { q: 0, v: a.price }])),
+    ia: [], auto: [], int: [],
+    pagamento: { parcelas: 1, desconto: 0 },
+    obs: '',
+  });
+
+  let state = load();
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (raw) return deepMerge(defaultState(), JSON.parse(raw));
+    } catch (e) { /* armazenamento indisponível */ }
+    return defaultState();
+  }
+  function save() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* ignora */ }
+  }
+  function deepMerge(base, extra) {
+    for (const k in extra) {
+      if (extra[k] && typeof extra[k] === 'object' && !Array.isArray(extra[k]) && base[k] && typeof base[k] === 'object' && !Array.isArray(base[k])) {
+        deepMerge(base[k], extra[k]);
+      } else if (extra[k] !== undefined) {
+        base[k] = extra[k];
+      }
+    }
+    return base;
+  }
+
+  /* ===================== Utilidades ===================== */
+  const $ = s => document.querySelector(s);
+  const brl = n => (Number(n) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const num = v => { const n = parseFloat(v); return isFinite(n) ? n : 0; };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const getPath = (o, p) => p.split('.').reduce((a, k) => a?.[k], o);
+  const setPath = (o, p, v) => { const ks = p.split('.'); const last = ks.pop(); ks.reduce((a, k) => a[k], o)[last] = v; };
+
+  function toast(msg) {
+    const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 1800);
+  }
+
+  /* ===================== Cálculos ===================== */
+  function calc() {
+    const plan = PLANS[state.plano];
+    const planValue = num(state.planoValor[state.plano]);
+    const addonLines = ADDONS.map(a => {
+      const s = state.addons[a.key];
+      return { ...a, q: Math.max(0, Math.round(num(s.q))), v: num(s.v), total: Math.max(0, Math.round(num(s.q))) * num(s.v) };
+    });
+    const addonsTotal = addonLines.reduce((s, l) => s + l.total, 0);
+    const listTotal = k => state[k].reduce((s, i) => s + num(i.valor), 0);
+    const intMonthly = state.int.reduce((s, i) => s + num(i.mensal), 0);
+
+    const setup = num(state.setup.valor);
+    const ia = listTotal('ia'), auto = listTotal('auto'), integ = listTotal('int');
+    const oneTimeGross = setup + ia + auto + integ;
+    const discPct = Math.min(100, Math.max(0, num(state.pagamento.desconto)));
+    const discount = oneTimeGross * discPct / 100;
+    const oneTime = oneTimeGross - discount;
+    const monthly = planValue + addonsTotal + intMonthly;
+    const parcelas = Math.max(1, Math.round(num(state.pagamento.parcelas)));
+    const parcela = oneTime / parcelas;
+
+    return { plan, planValue, addonLines, addonsTotal, intMonthly, setup, ia, auto, integ,
+             oneTimeGross, discPct, discount, oneTime, monthly, parcelas, parcela,
+             firstMonth: oneTime + monthly, firstPayment: parcela + monthly };
+  }
+
+  /* ===================== Renderização ===================== */
+  function renderPlans() {
+    $('#plans').innerHTML = Object.entries(PLANS).map(([k, p]) => `
+      <button type="button" class="plan ${k === state.plano ? 'active' : ''}" data-plan="${k}">
+        ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
+        <div class="name">${p.name}</div>
+        <div class="price">${brl(state.planoValor[k]).replace(',00', '')}<small>/mês</small></div>
+        <div class="feat">${p.feat}</div>
+        <span class="radio" aria-hidden="true"></span>
+      </button>`).join('');
+    $('#planPrice').value = state.planoValor[state.plano];
+  }
+
+  function renderSetup() {
+    $('#setupList').innerHTML = state.setup.itens.map((it, i) => `
+      <li class="check ${it.on ? '' : 'off'}">
+        <input type="checkbox" ${it.on ? 'checked' : ''} data-setup-toggle="${i}" aria-label="Incluir item">
+        <textarea class="txt" rows="1" data-setup-text="${i}" placeholder="Descreva o item do escopo">${esc(it.t)}</textarea>
+        <button type="button" class="del" data-setup-del="${i}" title="Remover item" aria-label="Remover item">×</button>
+      </li>`).join('');
+    document.querySelectorAll('#setupList .txt').forEach(autoGrow);
+  }
+  function autoGrow(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+
+  function renderAddons() {
+    const p = PLANS[state.plano];
+    $('#addons').innerHTML = ADDONS.map(a => {
+      const s = state.addons[a.key];
+      return `
+      <div class="addon">
+        <div><h3>${a.title}</h3><p>${a.incl(p)}</p></div>
+        <label class="field"><span>Quantidade</span>
+          <div class="stepper">
+            <button type="button" data-step="${a.key}" data-d="-1" aria-label="Diminuir">−</button>
+            <input type="number" min="0" step="1" value="${s.q}" data-bind="addons.${a.key}.q" data-num>
+            <button type="button" data-step="${a.key}" data-d="1" aria-label="Aumentar">+</button>
+          </div>
+        </label>
+        <label class="field"><span>Valor / ${a.unit} / mês</span>
+          <div class="money"><em>R$</em><input type="number" min="0" step="1" value="${s.v}" data-bind="addons.${a.key}.v" data-num></div>
+        </label>
+        <div class="line-total" data-addon-total="${a.key}"></div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderList(k) {
+    const cfg = LISTS[k];
+    const box = document.getElementById(cfg.el);
+    if (!state[k].length) { box.innerHTML = `<div class="empty">${cfg.empty}</div>`; return; }
+    box.innerHTML = state[k].map((it, i) => `
+      <div class="item ${cfg.monthly ? 'with-monthly' : ''}">
+        <div class="col">
+          <input class="input" placeholder="${cfg.placeholder}" value="${esc(it.nome)}" data-list="${k}" data-i="${i}" data-f="nome">
+          <input class="input" placeholder="${cfg.descPlaceholder}" value="${esc(it.desc)}" data-list="${k}" data-i="${i}" data-f="desc" style="font-size:13.5px">
+        </div>
+        <div class="col">
+          <div class="mini">Implantação</div>
+          <div class="money"><em>R$</em><input type="number" min="0" step="1" value="${it.valor}" data-list="${k}" data-i="${i}" data-f="valor"></div>
+        </div>
+        ${cfg.monthly ? `
+        <div class="col">
+          <div class="mini">Mensal</div>
+          <div class="money"><em>R$</em><input type="number" min="0" step="1" value="${it.mensal}" data-list="${k}" data-i="${i}" data-f="mensal"></div>
+        </div>` : ''}
+        <button type="button" class="btn-icon" data-del="${k}" data-i="${i}" title="Remover" aria-label="Remover">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+        </button>
+      </div>`).join('');
+  }
+
+  function renderQuick() {
+    document.querySelectorAll('[data-quick]').forEach(el => {
+      const k = el.dataset.quick;
+      el.innerHTML = LISTS[k].quick.map(q => `<button type="button" class="chip" data-quick-add="${k}" data-name="${esc(q)}">+ ${esc(q)}</button>`).join('');
+    });
+  }
+
+  function renderInstallments() {
+    const sel = $('#installments');
+    sel.innerHTML = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1}x</option>`).join('');
+    sel.value = state.pagamento.parcelas;
+  }
+
+  function bindValues() {
+    document.querySelectorAll('[data-bind]').forEach(el => {
+      const v = getPath(state, el.dataset.bind);
+      if (document.activeElement !== el) el.value = v ?? '';
+    });
+  }
+
+  function update() {
+    const c = calc();
+    const p = c.plan;
+
+    // Subtotais das etapas
+    $('#setupSub').textContent = brl(c.setup);
+    $('#addonsSub').textContent = c.addonsTotal ? `${brl(c.addonsTotal)}/mês` : '';
+    $('#iaSub').textContent = c.ia ? brl(c.ia) : '';
+    $('#autoSub').textContent = c.auto ? brl(c.auto) : '';
+    $('#intSub').textContent = c.integ || c.intMonthly
+      ? [c.integ ? brl(c.integ) : '', c.intMonthly ? `${brl(c.intMonthly)}/mês` : ''].filter(Boolean).join(' + ') : '';
+    c.addonLines.forEach(l => {
+      const el = document.querySelector(`[data-addon-total="${l.key}"]`);
+      if (el) el.textContent = l.total ? `${brl(l.total)}/mês` : '—';
+    });
+    const qtyAddons = c.addonLines.filter(l => l.q).map(l => `${l.q} ${l.unit}${l.q > 1 ? 's' : ''}`);
+    $('#addonsHint').textContent = qtyAddons.length
+      ? qtyAddons.join(' · ') + ' · recorrente mensal'
+      : 'Além do que o plano já inclui · recorrente mensal';
+
+    // Cabeçalho do resumo
+    const cl = state.cliente;
+    $('#sClient').textContent = cl.empresa || 'Cliente';
+    $('#sMeta').textContent = [cl.responsavel, `Plano ${p.name}`].filter(Boolean).join(' · ');
+
+    // Recorrente
+    const recRows = [[`Plano ${p.name}`, c.planValue]];
+    c.addonLines.filter(l => l.q).forEach(l => recRows.push([`${l.q}× ${l.title}`, l.total]));
+    if (c.intMonthly) recRows.push(['Manutenção de integrações', c.intMonthly]);
+    $('#sRecurring').innerHTML = `<h4>Recorrente mensal</h4>` +
+      recRows.map(([l, v]) => row(l, v)).join('') + row('Total mensal', c.monthly, 'sum');
+
+    // Implantação
+    const oneRows = [['Setup · Ativação', c.setup]];
+    if (state.ia.length) oneRows.push([`${state.ia.length}× Agente${state.ia.length > 1 ? 's' : ''} de IA`, c.ia]);
+    if (state.auto.length) oneRows.push([`${state.auto.length}× Automaç${state.auto.length > 1 ? 'ões' : 'ão'}`, c.auto]);
+    if (state.int.length) oneRows.push([`${state.int.length}× Integraç${state.int.length > 1 ? 'ões' : 'ão'}`, c.integ]);
+    if (c.discount) oneRows.push([`Desconto (${c.discPct}%)`, -c.discount]);
+    $('#sOneTime').innerHTML = `<h4>Implantação (único)</h4>` +
+      oneRows.map(([l, v]) => row(l, v)).join('') + row('Total implantação', c.oneTime, 'sum');
+
+    $('#sFirst').textContent = brl(c.firstMonth);
+    $('#payNote').textContent = c.parcelas > 1
+      ? `${c.parcelas}× de ${brl(c.parcela)} na implantação · 1º pagamento: ${brl(c.firstPayment)}`
+      : 'Implantação à vista.';
+
+    $('#sProj').innerHTML =
+      row('3 meses de recorrência', c.monthly * 3) +
+      row('12 meses de recorrência', c.monthly * 12) +
+      row('Investimento no 1º ano', c.monthly * 12 + c.oneTime);
+
+    save();
+  }
+  function row(label, value, cls = '') {
+    return `<div class="s-row ${cls}"><span>${esc(label)}</span><span>${value < 0 ? '− ' + brl(-value) : brl(value)}</span></div>`;
+  }
+
+  function renderAll() {
+    renderPlans(); renderSetup(); renderAddons(); renderInstallments();
+    Object.keys(LISTS).forEach(renderList);
+    bindValues(); update();
+  }
+
+  /* ===================== Eventos ===================== */
+  document.addEventListener('input', e => {
+    const el = e.target;
+    if (el.dataset.bind) {
+      setPath(state, el.dataset.bind, el.hasAttribute('data-num') ? num(el.value) : el.value);
+      update(); return;
+    }
+    if (el.id === 'planPrice') {
+      state.planoValor[state.plano] = num(el.value);
+      document.querySelector(`.plan[data-plan="${state.plano}"] .price`).innerHTML =
+        `${brl(state.planoValor[state.plano]).replace(',00', '')}<small>/mês</small>`;
+      update(); return;
+    }
+    if (el.dataset.setupText !== undefined) {
+      state.setup.itens[+el.dataset.setupText].t = el.value; autoGrow(el); update(); return;
+    }
+    if (el.dataset.list) {
+      const it = state[el.dataset.list][+el.dataset.i];
+      it[el.dataset.f] = ['valor', 'mensal'].includes(el.dataset.f) ? num(el.value) : el.value;
+      update();
+    }
+  });
+
+  document.addEventListener('change', e => {
+    const el = e.target;
+    if (el.dataset.setupToggle !== undefined) {
+      const i = +el.dataset.setupToggle;
+      state.setup.itens[i].on = el.checked;
+      el.closest('.check').classList.toggle('off', !el.checked);
+      update();
+    }
+    if (el.id === 'installments') { state.pagamento.parcelas = +el.value; update(); }
+  });
+
+  document.addEventListener('click', e => {
+    const t = e.target.closest('button');
+    if (!t) return;
+
+    if (t.dataset.plan) {
+      state.plano = t.dataset.plan; renderPlans(); renderAddons(); update(); return;
+    }
+    if (t.dataset.step) {
+      const s = state.addons[t.dataset.step];
+      s.q = Math.max(0, Math.round(num(s.q)) + +t.dataset.d);
+      t.parentElement.querySelector('input').value = s.q; update(); return;
+    }
+    if (t.dataset.setupDel !== undefined) {
+      state.setup.itens.splice(+t.dataset.setupDel, 1); renderSetup(); update(); return;
+    }
+    if (t.id === 'addSetupItem') {
+      state.setup.itens.push({ t: '', on: true }); renderSetup(); update();
+      const all = document.querySelectorAll('#setupList .txt'); all[all.length - 1].focus(); return;
+    }
+    if (t.id === 'restoreSetup') {
+      state.setup.itens = SETUP_DEFAULT.map(x => ({ t: x, on: true })); renderSetup(); update(); toast('Escopo padrão restaurado'); return;
+    }
+    if (t.dataset.add || t.dataset.quickAdd) {
+      const k = t.dataset.add || t.dataset.quickAdd;
+      const cfg = LISTS[k];
+      state[k].push({ nome: t.dataset.name || '', desc: '', valor: cfg.price, mensal: 0 });
+      renderList(k); update();
+      if (!t.dataset.name) {
+        const inputs = document.querySelectorAll(`#${cfg.el} [data-f="nome"]`); inputs[inputs.length - 1].focus();
+      }
+      return;
+    }
+    if (t.dataset.del) {
+      state[t.dataset.del].splice(+t.dataset.i, 1); renderList(t.dataset.del); update(); return;
+    }
+    if (t.id === 'btnReset') {
+      if (confirm('Limpar todos os dados da proposta?')) { state = defaultState(); renderAll(); toast('Proposta limpa'); }
+      return;
+    }
+    if (t.id === 'btnCopy' || t.id === 'btnCopyTop') { copy(summaryText(), 'Resumo copiado'); return; }
+    if (t.id === 'btnTsv') { copy(tableTSV(), 'Tabela copiada — cole no Excel/Sheets'); return; }
+    if (t.id === 'btnPrint' || t.id === 'btnPrintTop') { buildPrint(); window.print(); }
+  });
+
+  window.addEventListener('beforeprint', buildPrint);
+
+  /* ===================== Exportação ===================== */
+  function copy(text, msg) {
+    const done = () => toast(msg);
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(text).then(done, () => fallbackCopy(text, done));
+    } else fallbackCopy(text, done);
+  }
+  function fallbackCopy(text, done) {
+    const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta);
+    ta.select(); try { document.execCommand('copy'); done(); } catch (e) { toast('Não foi possível copiar'); }
+    ta.remove();
+  }
+
+  function lineItems() {
+    const c = calc();
+    const rec = [[`Plano ${c.plan.name}`, '', c.planValue]];
+    c.addonLines.filter(l => l.q).forEach(l => rec.push([l.title, `${l.q} × ${brl(l.v)}`, l.total]));
+    state.int.filter(i => num(i.mensal)).forEach(i => rec.push([`Manutenção integração · ${i.nome || 'Integração'}`, '', num(i.mensal)]));
+    const one = [['Setup · Ativação e configuração', '', c.setup]];
+    state.ia.forEach(i => one.push([`Agente de IA · ${i.nome || 'Agente'}`, i.desc || '', num(i.valor)]));
+    state.auto.forEach(i => one.push([`Automação · ${i.nome || 'Automação'}`, i.desc || '', num(i.valor)]));
+    state.int.forEach(i => one.push([`Integração · ${i.nome || 'Integração'}`, i.desc || '', num(i.valor)]));
+    if (c.discount) one.push([`Desconto na implantação (${c.discPct}%)`, '', -c.discount]);
+    return { c, rec, one };
+  }
+
+  function summaryText() {
+    const { c, rec, one } = lineItems();
+    const cl = state.cliente;
+    const L = [];
+    L.push(`*Proposta The Seller*${cl.empresa ? ' — ' + cl.empresa : ''}`);
+    if (cl.responsavel) L.push(`A/C: ${cl.responsavel}`);
+    L.push('', '*Recorrente mensal*');
+    rec.forEach(([n, d, v]) => L.push(`• ${n}${d ? ' (' + d + ')' : ''}: ${brl(v)}`));
+    L.push(`*Total mensal: ${brl(c.monthly)}*`);
+    L.push('', '*Implantação (único)*');
+    one.forEach(([n, , v]) => L.push(`• ${n}: ${v < 0 ? '− ' + brl(-v) : brl(v)}`));
+    L.push(`*Total implantação: ${brl(c.oneTime)}*${c.parcelas > 1 ? ` (${c.parcelas}× de ${brl(c.parcela)})` : ''}`);
+    const scope = state.setup.itens.filter(i => i.on && i.t.trim());
+    if (scope.length) { L.push('', '*Escopo do setup*'); scope.forEach(i => L.push(`• ${i.t.trim()}`)); }
+    L.push('', `*Total no 1º mês: ${brl(c.firstMonth)}*`);
+    if (cl.validade) L.push(`Proposta válida por ${cl.validade} dias.`);
+    return L.join('\n');
+  }
+
+  function tableTSV() {
+    const { c, rec, one } = lineItems();
+    const f = v => (Number(v) || 0).toFixed(2).replace('.', ',');
+    const L = [['Tipo', 'Item', 'Detalhe', 'Valor (R$)'].join('\t')];
+    rec.forEach(([n, d, v]) => L.push(['Mensal', n, d, f(v)].join('\t')));
+    L.push(['Mensal', 'TOTAL MENSAL', '', f(c.monthly)].join('\t'));
+    one.forEach(([n, d, v]) => L.push(['Implantação', n, d.replace(/\t|\n/g, ' '), f(v)].join('\t')));
+    L.push(['Implantação', 'TOTAL IMPLANTAÇÃO', c.parcelas > 1 ? `${c.parcelas}x de ${f(c.parcela)}` : 'À vista', f(c.oneTime)].join('\t'));
+    L.push(['', 'TOTAL NO 1º MÊS', '', f(c.firstMonth)].join('\t'));
+    return L.join('\n');
+  }
+
+  function buildPrint() {
+    const { c, rec, one } = lineItems();
+    const cl = state.cliente;
+    const today = new Date();
+    const valid = new Date(today.getTime() + (num(cl.validade) || 0) * 864e5);
+    const d = dt => dt.toLocaleDateString('pt-BR');
+    const scope = state.setup.itens.filter(i => i.on && i.t.trim());
+    const tbl = rows => `<table class="p-table"><thead><tr><th>Item</th><th class="v">Valor</th></tr></thead><tbody>${
+      rows.map(([n, det, v]) => `<tr><td>${esc(n)}${det ? `<small>${esc(det)}</small>` : ''}</td><td class="v">${v < 0 ? '− ' + brl(-v) : brl(v)}</td></tr>`).join('')
+    }</tbody></table>`;
+    const field = (k, v) => v ? `<div><span>${k}</span>${esc(v)}</div>` : '';
+
+    let n = 0; const sec = () => String(++n).padStart(2, '0');
+
+    $('#print').innerHTML = `
+      <div class="p-head">
+        <img src="assets/logo-the-seller.png" alt="The Seller">
+        <div class="r"><strong>Proposta Comercial</strong>Emitida em ${d(today)}${cl.validade ? ` · válida até ${d(valid)}` : ''}</div>
+      </div>
+      <div class="p-client">
+        ${field('Empresa', cl.empresa)}${field('Responsável', cl.responsavel)}${field('CNPJ', cl.cnpj)}
+        ${field('E-mail', cl.email)}${field('WhatsApp', cl.telefone)}${field('Segmento', cl.segmento)}
+      </div>
+
+      <div class="p-sec"><h3><b>${sec()}</b> Plano e recorrência mensal</h3>
+        ${tbl(rec)}
+        <p class="hint" style="margin-top:6px">Plano ${esc(c.plan.name)}: ${esc(c.plan.feat)}.</p>
+      </div>
+
+      <div class="p-sec"><h3><b>${sec()}</b> Setup · Ativação e configuração</h3>
+        ${scope.length ? `<ul>${scope.map(i => `<li>${esc(i.t.trim())}</li>`).join('')}</ul>` : ''}
+        ${state.setup.prazo ? `<p class="hint">Prazo estimado: ${esc(state.setup.prazo)}</p>` : ''}
+      </div>
+
+      <div class="p-sec"><h3><b>${sec()}</b> Investimento em implantação (único)</h3>
+        ${tbl(one)}
+      </div>
+
+      <div class="p-totals">
+        <div><span>Total mensal</span><strong>${brl(c.monthly)}</strong><small>recorrente</small></div>
+        <div><span>Implantação</span><strong>${brl(c.oneTime)}</strong><small>${c.parcelas > 1 ? `${c.parcelas}× de ${brl(c.parcela)}` : 'à vista'}</small></div>
+        <div class="main"><span>Total no 1º mês</span><strong>${brl(c.firstMonth)}</strong><small>implantação + 1ª mensalidade</small></div>
+      </div>
+
+      ${state.obs.trim() ? `<div class="p-sec"><h3><b>${sec()}</b> Observações</h3><div class="p-obs">${esc(state.obs.trim())}</div></div>` : ''}
+
+      <div class="p-foot"><span>The Seller${cl.consultor ? ' · Consultor: ' + esc(cl.consultor) : ''}</span><span>Valores em reais (BRL)</span></div>
+    `;
+  }
+
+  renderQuick();
+  renderAll();
+})();
+</script>
+</body>
+</html>
