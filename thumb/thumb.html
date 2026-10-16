@@ -2,73 +2,56 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>Thumb Podcast Kitcar</title>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@800;900&display=swap" rel="stylesheet">
+<title>Thumb Podcast Quitcar</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
 <style>
-  /* Thumb 1280x720. Para usar a foto real: salve como lucas.png (fundo recortado) nesta pasta. */
-  :root { --navy:#0B1630; --navy2:#16274A; --cyan:#00B1E2; --blue:#0060AB; --red:#E8262B; --yellow:#FFD400; }
+  /* Thumb 1280x720, estilo premium: fundo escuro, foto low-key à direita, texto branco + pílula azul. */
+  :root { --bg:#0c0e11; --blue:#1F6BE0; }
   * { margin:0; padding:0; box-sizing:border-box; }
-  html, body { width:1280px; height:720px; overflow:hidden; background:var(--navy); }
+  html, body { width:1280px; height:720px; overflow:hidden; background:var(--bg); }
   .t { position:relative; width:1280px; height:720px; overflow:hidden;
        background:
-         radial-gradient(ellipse 620px 520px at 30% 55%, rgba(0,177,226,.55), transparent 70%),
-         linear-gradient(115deg, var(--navy) 0%, var(--navy2) 55%, #06101f 100%); }
-  /* faixas diagonais da marca */
-  .stripe { position:absolute; top:-120px; width:70px; height:1000px; background:var(--cyan); transform:rotate(18deg); opacity:.18; }
-  .s1 { left:760px; } .s2 { left:850px; opacity:.1; }
+         radial-gradient(ellipse 560px 460px at 78% 42%, rgba(70,90,120,.38), transparent 70%),
+         radial-gradient(ellipse 900px 700px at 30% 50%, #15181d, var(--bg) 75%); }
 
-  /* foto */
-  .photo { position:absolute; left:-10px; bottom:0; width:790px; height:720px; display:flex; align-items:flex-end; justify-content:center; }
-  .photo img { width:790px; filter: drop-shadow(0 0 3px rgba(255,255,255,.55)) drop-shadow(0 20px 40px rgba(0,0,0,.6));
-               -webkit-mask-image:linear-gradient(180deg,#000 82%,transparent 100%); mask-image:linear-gradient(180deg,#000 82%,transparent 100%); }
-  .ph { width:470px; height:640px; border:4px dashed rgba(255,255,255,.45); border-bottom:none; border-radius:240px 240px 0 0;
-        background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-        display:flex; align-items:center; justify-content:center; text-align:center;
-        font:800 30px/1.25 Inter, sans-serif; color:rgba(255,255,255,.75); letter-spacing:.02em; }
+  .photo { position:absolute; right:-150px; bottom:0; width:920px; }
+  .photo img { display:block; width:100%;
+    filter: grayscale(.45) contrast(1.12) brightness(.82) saturate(.9);
+    -webkit-mask-image:
+      linear-gradient(180deg, #000 70%, transparent 100%),
+      linear-gradient(90deg, transparent 0%, #000 14%);
+    -webkit-mask-composite: source-in; mask-composite: intersect;
+    mask-image:
+      linear-gradient(180deg, #000 70%, transparent 100%),
+      linear-gradient(90deg, transparent 0%, #000 14%); }
+  /* escurece levemente a borda da foto para o texto respirar */
+  .shade { position:absolute; inset:0; background:linear-gradient(90deg, rgba(12,14,17,.9) 0%, rgba(12,14,17,.5) 42%, transparent 52%); pointer-events:none; }
 
-  /* texto */
-  .copy { position:absolute; right:40px; top:56px; width:480px; text-align:right; font-family:Anton, 'Inter', sans-serif; text-transform:uppercase; }
-  .tag { display:inline-block; background:var(--red); color:#fff; font:900 28px/1 Inter, sans-serif; padding:14px 22px 12px; transform:rotate(-3deg);
-         box-shadow:0 8px 24px rgba(0,0,0,.45); letter-spacing:.01em; }
-  .l1 { margin-top:24px; font-size:98px; line-height:.95; color:#fff; text-shadow:0 6px 0 rgba(0,0,0,.35); }
-  .l2 { font-size:150px; line-height:.9; color:var(--cyan); text-shadow:0 8px 0 #003a5e, 0 0 60px rgba(0,177,226,.5); letter-spacing:-.01em; }
-  .l2 .a { font-size:96px; color:#fff; margin-right:18px; text-shadow:0 6px 0 rgba(0,0,0,.35); }
-  .l2 small { text-transform:none;  font-size:84px; vertical-align:top; position:relative; top:10px; }
-  .l3 { margin-top:14px; font-size:50px; line-height:1; color:var(--yellow); text-shadow:0 5px 0 rgba(0,0,0,.4); }
-  .arrow { color:var(--yellow); }
-
-  .logo { position:absolute; right:56px; bottom:40px; height:44px; opacity:.95; }
-  .guest { position:absolute; right:40px; bottom:48px; background:#fff; color:var(--navy); font:900 30px/1 Inter, sans-serif; padding:12px 20px; border-left:10px solid var(--cyan); }
-  .guest span { color:var(--blue); }
-  .v-b, .v-a { display:none; }
+  .copy { position:absolute; left:56px; top:50%; transform:translateY(-50%); font-family:Montserrat, sans-serif; text-transform:uppercase; }
+  .kicker { font-weight:800; font-size:20px; letter-spacing:.32em; color:rgba(255,255,255,.55); margin-bottom:22px; }
+  .big { font-weight:900; font-size:76px; line-height:.98; color:#fff; letter-spacing:-.015em; text-shadow:0 4px 30px rgba(0,0,0,.6); }
+  .pill { display:inline-block; margin-top:20px; background:var(--blue); color:#fff; font-weight:900; font-size:38px; line-height:1;
+          padding:14px 26px 15px; border-radius:16px; letter-spacing:-.005em; box-shadow:0 10px 30px rgba(31,107,224,.35); }
+  .v-a, .v-b { display:none; }
   body.a .v-a, body.b .v-b { display:block; }
 </style>
 </head>
 <body class="a">
 <div class="t">
-  <div class="stripe s1"></div><div class="stripe s2"></div>
+  <div class="photo"><img src="grupo.png" alt=""></div>
+  <div class="shade"></div>
 
-  <div class="photo">
-    <img src="lucas.png" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',innerHTML:'FOTO DO LUCAS<br>(recortada, expressão forte)'}))">
-  </div>
-
-  <!-- Variante A: virada de chave -->
   <div class="copy v-a">
-    <div class="tag">FALIU E FICOU SEM NOME</div>
-    <div class="l1">De falido</div>
-    <div class="l2"><span class="a">a</span>3.500<small>m²</small></div>
-    <div class="l3">de loja de carros</div>
+    <div class="kicker">Lucas · Quitcar</div>
+    <div class="big">De falido<br>a 3.500<span style="text-transform:none">m²</span></div>
+    <div class="pill">de loja de carros</div>
   </div>
 
-  <!-- Variante B: origem -->
   <div class="copy v-b">
-    <div class="tag">COMEÇOU AOS 10 ANOS</div>
-    <div class="l1">Vendia peixe</div>
-    <div class="l2" style="font-size:124px">Hoje tem</div>
-    <div class="l3" style="font-size:76px">3 empresas</div>
+    <div class="kicker">Lucas · Quitcar</div>
+    <div class="big">Vendia peixe<br>aos 10 anos,</div>
+    <div class="pill">hoje tem 3 empresas</div>
   </div>
-
-  <div class="guest">LUCAS <span>· QUITCAR</span></div>
 </div>
 <script>
   const v = new URLSearchParams(location.search).get('v');
