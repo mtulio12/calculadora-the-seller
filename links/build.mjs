@@ -42,7 +42,7 @@ function resolve(item, where, base, utm) {
 const linkAttrs = (dest, track) =>
   `href="${esc(dest.href)}"${dest.external ? ' target="_blank" rel="noopener"' : ""} data-track="${esc(track)}"`;
 
-function card({ id, title, subtitle, iconHTML, iconClass = "", highlight, dest, i }) {
+function card({ id, title, subtitle, iconHTML, iconClass = "", highlight, dest }) {
   const cls = `card${highlight ? " card--highlight" : ""}${dest ? "" : " is-pending"}`;
   const ext = dest?.external ? '<span class="sr-only"> (abre em nova aba)</span>' : "";
   const inner = `
@@ -55,7 +55,7 @@ function card({ id, title, subtitle, iconHTML, iconClass = "", highlight, dest, 
   const el = dest
     ? `<a class="${cls}" ${linkAttrs(dest, id)}>${inner}\n    </a>`
     : `<div class="${cls}" aria-disabled="true">${inner}\n    </div>`;
-  return `  <li style="--i:${i}">\n    ${el}\n  </li>`;
+  return `  <li>\n    ${el}\n  </li>`;
 }
 
 function picture(path, alt, attrs, prefix = "") {
@@ -77,14 +77,17 @@ const nameHTML = (p, tag) =>
   `<${tag} class="name">${esc(p.name)}${p.verified ? `${icons.verified}<span class="sr-only">Perfil verificado</span>` : ""}</${tag}>`;
 
 // Silhueta provisória enquanto a foto recortada não existe.
-const SILHOUETTE = `<svg class="hero__placeholder" viewBox="0 0 300 300" fill="currentColor" aria-hidden="true"><circle cx="150" cy="105" r="58"/><path d="M30 300c4-70 54-118 120-118s116 48 120 118Z"/></svg>`;
+const SILHOUETTE = `<svg class="stage__placeholder" viewBox="0 0 300 300" fill="currentColor" aria-hidden="true"><circle cx="150" cy="105" r="58"/><path d="M30 300c4-70 54-118 120-118s116 48 120 118Z"/></svg>`;
 
-function hero(p) {
+// O palco: painel de LED ao fundo, o canhão de luz e a foto recortada.
+function stage(p) {
+  const beam = '<div class="stage__beam" aria-hidden="true"></div>';
   if (asset(p.heroImage)) {
-    return `<div class="hero"><div class="hero__photo">${picture(p.heroImage, p.heroAlt, 'width="600" height="800" fetchpriority="high" decoding="async"')}</div></div>`;
+    const img = picture(p.heroImage, p.heroAlt, 'width="857" height="1200" fetchpriority="high" decoding="async"');
+    return `<div class="stage">${beam}<div class="stage__photo">${img}</div></div>`;
   }
   flag("profile.heroImage (arquivo não encontrado)", `src/${p.heroImage}`);
-  return `<div class="hero">${SILHOUETTE}${pendingTag("PREENCHER: foto recortada")}</div>`;
+  return `<div class="stage">${beam}${SILHOUETTE}${pendingTag("PREENCHER: foto recortada")}</div>`;
 }
 
 function social(list) {
@@ -144,7 +147,7 @@ ${css}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;over
 ${analytics(cfg.analytics)}
 </head>
 <body>
-<div class="page">
+<div class="page${prefix ? " page--sub" : ""}">
 ${body}
 <footer class="footer">${esc(cfg.footer)}</footer>
 </div>
@@ -161,8 +164,8 @@ if (cfg.cards.length > 4) throw new Error("No máximo 4 cartões na página prin
 if (cfg.cards.filter((c) => c.highlight).length > 1) throw new Error("Só um cartão pode ter \"highlight\": true.");
 for (const c of cfg.cards) if (!c.title?.trim()) throw new Error(`Cartão "${c.id}" está sem título.`);
 
-const mainCards = cfg.cards.map((c, i) =>
-  card({ id: c.id, title: c.title, subtitle: c.subtitle, iconHTML: icon(c.icon), highlight: c.highlight, dest: resolve(c, `cards.${c.id}`, ""), i }),
+const mainCards = cfg.cards.map((c) =>
+  card({ id: c.id, title: c.title, subtitle: c.subtitle, iconHTML: icon(c.icon), highlight: c.highlight, dest: resolve(c, `cards.${c.id}`, "") }),
 );
 
 const home = layout({
@@ -170,11 +173,15 @@ const home = layout({
   prefix: "",
   path: "/",
   body: `<header>
-${hero(p)}
-<div class="profile">
-${avatar(p, "", 96)}
+${stage(p)}
+<div class="lower-third">
+${avatar(p, "", 64)}
+<div class="lower-third__id">
 ${nameHTML(p, "h1")}
 <p class="subtitle">${esc(p.subtitle)}</p>
+</div>
+</div>
+<div class="intro">
 <p class="bio">${esc(p.bio)}</p>
 ${social(cfg.social)}
 </div>
@@ -188,16 +195,15 @@ ${mainCards.join("\n")}
 
 // ---------- Subpágina /empresas ----------
 const cp = cfg.companiesPage;
-const companyCards = cp.companies.map((c, i) => {
+const companyCards = cp.companies.map((c) => {
   const logo = c.logo && asset(c.logo);
   return card({
     id: `empresa-${c.id}`,
     title: c.name,
     subtitle: c.subtitle,
-    iconHTML: logo ? `<img src="../${esc(c.logo)}" alt="" width="44" height="44" loading="lazy" decoding="async">` : `<span aria-hidden="true">${esc(c.name[0])}</span>`,
+    iconHTML: logo ? `<img src="../${esc(c.logo)}" alt="" width="40" height="40" loading="lazy" decoding="async">` : `<span aria-hidden="true">${esc(c.name[0])}</span>`,
     iconClass: logo ? " card__icon--logo" : " card__icon--initial",
     dest: resolve(c, `companiesPage.${c.id}`, "../", cp.utm),
-    i,
   });
 });
 
@@ -221,7 +227,7 @@ ${companyCards.join("\n")}
 // ---------- Saída ----------
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(join(DIST, "empresas"), { recursive: true });
-cpSync(join(SRC, "assets"), join(DIST, "assets"), { recursive: true, filter: (f) => extname(f) !== ".md" });
+cpSync(join(SRC, "assets"), join(DIST, "assets"), { recursive: true, filter: (f) => ![".md", ".json"].includes(extname(f)) });
 for (const f of ["favicon.svg", "favicon-32.png", "apple-touch-icon.png"]) cpSync(join(SRC, f), join(DIST, f));
 writeFileSync(join(DIST, "index.html"), home);
 writeFileSync(join(DIST, "empresas", "index.html"), empresas);
