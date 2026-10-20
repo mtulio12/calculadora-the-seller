@@ -11,7 +11,7 @@ const SRC = join(ROOT, "src");
 const DIST = join(ROOT, "dist");
 const INDEX = process.argv.includes("--file-links") ? "index.html" : "";
 const cfg = JSON.parse(readFileSync(join(ROOT, "links.json"), "utf8"));
-const css = readFileSync(join(SRC, "style.css"), "utf8");
+const css = readFileSync(join(SRC, "fonts.css"), "utf8") + readFileSync(join(SRC, "style.css"), "utf8");
 const js = readFileSync(join(SRC, "app.js"), "utf8");
 
 const pending = [];
@@ -60,7 +60,11 @@ function card({ id, title, subtitle, iconHTML, iconClass = "", highlight, dest }
 
 function picture(path, alt, attrs, prefix = "") {
   const webp = path.replace(/\.(png|jpe?g)$/i, ".webp");
-  const source = webp !== path && asset(webp) ? `<source srcset="${esc(prefix + webp)}" type="image/webp">` : "";
+  // variante menor opcional (<nome>-600.webp) para telas de celular
+  const small = webp.replace(/\.webp$/, "-600.webp");
+  const set = asset(small) ? `${esc(prefix + small)} 600w, ${esc(prefix + webp)} 857w` : esc(prefix + webp);
+  const sizes = asset(small) ? ' sizes="(max-width: 560px) 80vw, 340px"' : "";
+  const source = webp !== path && asset(webp) ? `<source srcset="${set}"${sizes} type="image/webp">` : "";
   return `<picture>${source}<img src="${esc(prefix + path)}" alt="${esc(alt)}" ${attrs}></picture>`;
 }
 
@@ -137,12 +141,9 @@ ${siteUrl ? `<meta property="og:url" content="${esc(siteUrl + path)}">\n` : ""}<
 <link rel="icon" href="${prefix}favicon.svg" type="image/svg+xml">
 <link rel="icon" href="${prefix}favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="${prefix}apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Poppins:wght@500;600&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Poppins:wght@500;600&display=swap"></noscript>
+<link rel="preload" href="${prefix}fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-${css}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+${css.replaceAll("url(fonts/", `url(${prefix}fonts/`)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
 ${analytics(cfg.analytics)}
 </head>
@@ -227,6 +228,7 @@ ${companyCards.join("\n")}
 // ---------- Saída ----------
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(join(DIST, "empresas"), { recursive: true });
+cpSync(join(SRC, "fonts"), join(DIST, "fonts"), { recursive: true });
 cpSync(join(SRC, "assets"), join(DIST, "assets"), { recursive: true, filter: (f) => ![".md", ".json"].includes(extname(f)) });
 for (const f of ["favicon.svg", "favicon-32.png", "apple-touch-icon.png"]) cpSync(join(SRC, f), join(DIST, f));
 writeFileSync(join(DIST, "index.html"), home);
