@@ -176,7 +176,7 @@ const home = layout({
   body: `<header>
 ${stage(p)}
 <div class="lower-third">
-${avatar(p, "", 64)}
+${avatar(p, "", 76)}
 <div class="lower-third__id">
 ${nameHTML(p, "h1")}
 <p class="subtitle">${esc(p.subtitle)}</p>

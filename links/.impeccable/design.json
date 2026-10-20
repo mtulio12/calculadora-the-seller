@@ -1,0 +1,393 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T02:50:00+00:00",
+  "title": "Design System: Marco Túlio · Links",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Follow-Spot Cyan",
+        "canonical": "#00B1E2",
+        "tonalRamp": [
+          "oklch(15% 0.136 227)",
+          "oklch(25% 0.136 227)",
+          "oklch(35% 0.136 227)",
+          "oklch(48% 0.136 227)",
+          "oklch(60% 0.136 227)",
+          "oklch(72% 0.136 227)",
+          "oklch(84% 0.136 227)",
+          "oklch(95% 0.136 227)"
+        ]
+      },
+      "accent-lit": {
+        "role": "primary",
+        "displayName": "Spot Core Cyan",
+        "canonical": "#3CC6EC",
+        "tonalRamp": [
+          "oklch(15% 0.126 221)",
+          "oklch(25% 0.126 221)",
+          "oklch(35% 0.126 221)",
+          "oklch(48% 0.126 221)",
+          "oklch(60% 0.126 221)",
+          "oklch(72% 0.126 221)",
+          "oklch(84% 0.126 221)",
+          "oklch(95% 0.126 221)"
+        ]
+      },
+      "wall": {
+        "role": "secondary",
+        "displayName": "LED Wall Blue",
+        "canonical": "#0060AB",
+        "tonalRamp": [
+          "oklch(15% 0.142 251)",
+          "oklch(25% 0.142 251)",
+          "oklch(35% 0.142 251)",
+          "oklch(48% 0.142 251)",
+          "oklch(60% 0.142 251)",
+          "oklch(72% 0.142 251)",
+          "oklch(84% 0.142 251)",
+          "oklch(95% 0.142 251)"
+        ]
+      },
+      "wall-deep": {
+        "role": "secondary",
+        "displayName": "Deep Wall Blue",
+        "canonical": "#0A3E78",
+        "tonalRamp": [
+          "oklch(15% 0.112 255)",
+          "oklch(25% 0.112 255)",
+          "oklch(35% 0.112 255)",
+          "oklch(48% 0.112 255)",
+          "oklch(60% 0.112 255)",
+          "oklch(72% 0.112 255)",
+          "oklch(84% 0.112 255)",
+          "oklch(95% 0.112 255)"
+        ]
+      },
+      "stage": {
+        "role": "neutral",
+        "displayName": "Stage Floor",
+        "canonical": "#0B1119",
+        "tonalRamp": [
+          "oklch(15% 0.019 256)",
+          "oklch(25% 0.019 256)",
+          "oklch(35% 0.019 256)",
+          "oklch(48% 0.019 256)",
+          "oklch(60% 0.019 256)",
+          "oklch(72% 0.019 256)",
+          "oklch(84% 0.019 256)",
+          "oklch(95% 0.019 256)"
+        ]
+      },
+      "bg": {
+        "role": "neutral",
+        "displayName": "House Dark",
+        "canonical": "#0F1620",
+        "tonalRamp": [
+          "oklch(15% 0.023 257)",
+          "oklch(25% 0.023 257)",
+          "oklch(35% 0.023 257)",
+          "oklch(48% 0.023 257)",
+          "oklch(60% 0.023 257)",
+          "oklch(72% 0.023 257)",
+          "oklch(84% 0.023 257)",
+          "oklch(95% 0.023 257)"
+        ]
+      },
+      "riser": {
+        "role": "neutral",
+        "displayName": "Riser",
+        "canonical": "#141E2E",
+        "tonalRamp": [
+          "oklch(15% 0.034 260)",
+          "oklch(25% 0.034 260)",
+          "oklch(35% 0.034 260)",
+          "oklch(48% 0.034 260)",
+          "oklch(60% 0.034 260)",
+          "oklch(72% 0.034 260)",
+          "oklch(84% 0.034 260)",
+          "oklch(95% 0.034 260)"
+        ]
+      },
+      "riser-top": {
+        "role": "neutral",
+        "displayName": "Riser Top",
+        "canonical": "#1A2740",
+        "tonalRamp": [
+          "oklch(15% 0.050 263)",
+          "oklch(25% 0.050 263)",
+          "oklch(35% 0.050 263)",
+          "oklch(48% 0.050 263)",
+          "oklch(60% 0.050 263)",
+          "oklch(72% 0.050 263)",
+          "oklch(84% 0.050 263)",
+          "oklch(95% 0.050 263)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#0B1119",
+        "tonalRamp": [
+          "oklch(15% 0.019 256)",
+          "oklch(25% 0.019 256)",
+          "oklch(35% 0.019 256)",
+          "oklch(48% 0.019 256)",
+          "oklch(60% 0.019 256)",
+          "oklch(72% 0.019 256)",
+          "oklch(84% 0.019 256)",
+          "oklch(95% 0.019 256)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "House White",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(25% 0.000 90)",
+          "oklch(35% 0.000 90)",
+          "oklch(48% 0.000 90)",
+          "oklch(60% 0.000 90)",
+          "oklch(72% 0.000 90)",
+          "oklch(84% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Haze Grey",
+        "canonical": "#A9BACB",
+        "tonalRamp": [
+          "oklch(15% 0.031 248)",
+          "oklch(25% 0.031 248)",
+          "oklch(35% 0.031 248)",
+          "oklch(48% 0.031 248)",
+          "oklch(60% 0.031 248)",
+          "oklch(72% 0.031 248)",
+          "oklch(84% 0.031 248)",
+          "oklch(95% 0.031 248)"
+        ]
+      },
+      "edge": {
+        "role": "neutral",
+        "displayName": "Edge",
+        "canonical": "rgba(255, 255, 255, 0.07)"
+      },
+      "edge-lit": {
+        "role": "neutral",
+        "displayName": "Lit Edge",
+        "canonical": "rgba(255, 255, 255, 0.16)"
+      },
+      "pending": {
+        "role": "neutral",
+        "displayName": "Pending Amber",
+        "canonical": "#FFC857",
+        "tonalRamp": [
+          "oklch(15% 0.142 83)",
+          "oklch(25% 0.142 83)",
+          "oklch(35% 0.142 83)",
+          "oklch(48% 0.142 83)",
+          "oklch(60% 0.142 83)",
+          "oklch(72% 0.142 83)",
+          "oklch(84% 0.142 83)",
+          "oklch(95% 0.142 83)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The name in the lower-third (18px in the compact subpage header)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Subpage title."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase cyan role line under the name, lower-third only."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Bio, max 34ch, muted."
+      },
+      "body-sm": {
+        "displayName": "Body small",
+        "purpose": "Card subtitles, 2-line clamp."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Footer."
+      }
+    },
+    "shadows": [
+      {
+        "name": "riser-rest",
+        "value": "0 14px 26px -16px rgba(0, 0, 0, 0.85)",
+        "purpose": "Standard card at rest."
+      },
+      {
+        "name": "riser-forward",
+        "value": "0 26px 30px -14px rgba(0, 0, 0, 1)",
+        "purpose": "Standard card on hover."
+      },
+      {
+        "name": "lit-card",
+        "value": "0 16px 28px -14px rgba(0, 0, 0, 0.9)",
+        "purpose": "CTA card at rest; hover 0 22px 32px -14px rgba(0, 0, 0, 1)."
+      },
+      {
+        "name": "plate",
+        "value": "0 18px 36px -18px rgba(0, 0, 0, 0.9)",
+        "purpose": "Lower-third plate."
+      },
+      {
+        "name": "floor-pool",
+        "value": "radial-gradient(closest-side, rgba(0, 177, 226, 0.6), rgba(0, 177, 226, 0.18) 60%, rgba(0, 177, 226, 0)) + blur(4px), 30px ellipse under the card",
+        "purpose": "Light the CTA spills onto the floor."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All transitions and the load sequence."
+      },
+      {
+        "name": "hover-card",
+        "value": "0.25s",
+        "purpose": "Card lift, edge, wash, icon, chevron."
+      },
+      {
+        "name": "hover-round",
+        "value": "0.2s",
+        "purpose": "Round buttons."
+      },
+      {
+        "name": "beam-up",
+        "value": "1.2s, scaleX(0.55)/opacity 0.25 -> none",
+        "purpose": "Spot opens on load."
+      },
+      {
+        "name": "lit",
+        "value": "1.2s, brightness(0.55) saturate(0.8) -> none",
+        "purpose": "Subject brightens on load, ending unfiltered."
+      },
+      {
+        "name": "pool",
+        "value": "0.9s, delay 0.55s, scale(0.6)/opacity 0 -> none",
+        "purpose": "CTA floor pool lands last."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "560px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Programme Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Standard riser card for every supporting link; steps forward into the light on hover.",
+      "html": "<a class=\"ds-card\" href=\"#\"><span class=\"ds-card__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z\"/><path d=\"M19 10v2a7 7 0 0 1-14 0v-2\"/><path d=\"M12 19v3\"/></svg></span><span class=\"ds-card__text\"><span class=\"ds-card__title\">Palestras e convites</span><span class=\"ds-card__sub\">Eventos, podcasts e entrevistas</span></span><span class=\"ds-card__chev\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></span></a>",
+      "css": ":root{--stage:#0B1119;--bg:#0F1620;--riser:#141E2E;--riser-top:#1A2740;--accent:#00B1E2;--accent-lit:#3CC6EC;--ink:#0B1119;--text:#FFFFFF;--muted:#A9BACB;--edge:rgba(255,255,255,0.07);--edge-lit:rgba(255,255,255,0.16);--pending:#FFC857;--radius:16px;--ease-out:cubic-bezier(0.16,1,0.3,1);--font-display:\"Poppins\",system-ui,sans-serif;--font-body:\"DM Sans\",system-ui,sans-serif}.ds-card{position:relative;display:flex;align-items:center;gap:14px;min-height:72px;padding:14px 16px;border-radius:var(--radius);background:linear-gradient(180deg,var(--riser-top) 0%,var(--riser) 100%);border:1px solid var(--edge);border-top-color:var(--edge-lit);box-shadow:0 14px 26px -16px rgba(0,0,0,.85);color:var(--text);text-decoration:none;font-family:var(--font-body);transition:transform .25s var(--ease-out),border-color .25s var(--ease-out),box-shadow .25s var(--ease-out)}.ds-card::before{content:\"\";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(190,240,255,.16) 0%,rgba(190,240,255,0) 55%);opacity:0;transition:opacity .25s var(--ease-out);pointer-events:none}.ds-card:hover::before,.ds-card:focus-visible::before{opacity:1}.ds-card:hover{transform:translateY(-3px);border-top-color:rgba(220,248,255,.55);box-shadow:0 26px 30px -14px rgba(0,0,0,1)}.ds-card:active{transform:translateY(0)}.ds-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.ds-card__icon{flex:none;display:grid;place-items:center;width:32px;height:32px;color:var(--accent);transition:color .25s var(--ease-out)}.ds-card:hover .ds-card__icon{color:#8FE3FA}.ds-card__icon svg{width:24px;height:24px}.ds-card__text{flex:1;min-width:0}.ds-card__title{display:block;font-family:var(--font-display);font-weight:600;font-size:16px;line-height:1.3}.ds-card__sub{display:block;margin-top:2px;font-size:14px;color:var(--muted)}.ds-card__chev{flex:none;width:20px;height:20px;color:var(--muted);transition:transform .25s var(--ease-out)}.ds-card:hover .ds-card__chev{transform:translateX(2px)}"
+    },
+    {
+      "name": "Lit Card (CTA)",
+      "kind": "card",
+      "refersTo": "card-highlight",
+      "description": "The single cyan card the spot lands on: the WhatsApp path. One per main page.",
+      "html": "<div style=\"padding:0 0 36px\"><a class=\"ds-card ds-card--lit\" href=\"#\"><span class=\"ds-card__icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\"/></svg></span><span class=\"ds-card__text\"><span class=\"ds-card__title\">Quero conversar sobre meu negócio</span><span class=\"ds-card__sub\">Me conta seu desafio de vendas</span></span><span class=\"ds-card__chev\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></span></a></div>",
+      "css": ":root{--stage:#0B1119;--bg:#0F1620;--riser:#141E2E;--riser-top:#1A2740;--accent:#00B1E2;--accent-lit:#3CC6EC;--ink:#0B1119;--text:#FFFFFF;--muted:#A9BACB;--edge:rgba(255,255,255,0.07);--edge-lit:rgba(255,255,255,0.16);--pending:#FFC857;--radius:16px;--ease-out:cubic-bezier(0.16,1,0.3,1);--font-display:\"Poppins\",system-ui,sans-serif;--font-body:\"DM Sans\",system-ui,sans-serif}.ds-card{position:relative;display:flex;align-items:center;gap:14px;min-height:72px;padding:14px 16px;border-radius:var(--radius);background:linear-gradient(180deg,var(--riser-top) 0%,var(--riser) 100%);border:1px solid var(--edge);border-top-color:var(--edge-lit);box-shadow:0 14px 26px -16px rgba(0,0,0,.85);color:var(--text);text-decoration:none;font-family:var(--font-body);transition:transform .25s var(--ease-out),border-color .25s var(--ease-out),box-shadow .25s var(--ease-out)}.ds-card::before{content:\"\";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(190,240,255,.16) 0%,rgba(190,240,255,0) 55%);opacity:0;transition:opacity .25s var(--ease-out);pointer-events:none}.ds-card:hover::before,.ds-card:focus-visible::before{opacity:1}.ds-card:hover{transform:translateY(-3px);border-top-color:rgba(220,248,255,.55);box-shadow:0 26px 30px -14px rgba(0,0,0,1)}.ds-card:active{transform:translateY(0)}.ds-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.ds-card__icon{flex:none;display:grid;place-items:center;width:32px;height:32px;color:var(--accent);transition:color .25s var(--ease-out)}.ds-card:hover .ds-card__icon{color:#8FE3FA}.ds-card__icon svg{width:24px;height:24px}.ds-card__text{flex:1;min-width:0}.ds-card__title{display:block;font-family:var(--font-display);font-weight:600;font-size:16px;line-height:1.3}.ds-card__sub{display:block;margin-top:2px;font-size:14px;color:var(--muted)}.ds-card__chev{flex:none;width:20px;height:20px;color:var(--muted);transition:transform .25s var(--ease-out)}.ds-card:hover .ds-card__chev{transform:translateX(2px)}.ds-card--lit{background:linear-gradient(180deg,var(--accent-lit) 0%,var(--accent) 55%,#00A3D3 100%);border-color:transparent;border-top-color:rgba(255,255,255,.55);color:var(--ink);box-shadow:0 16px 28px -14px rgba(0,0,0,.9)}.ds-card--lit::before{background:linear-gradient(180deg,rgba(255,255,255,.35) 0%,rgba(255,255,255,0) 55%)}.ds-card--lit::after{content:\"\";position:absolute;z-index:-1;left:-6%;right:-6%;bottom:-30px;height:30px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,177,226,.6),rgba(0,177,226,.18) 60%,rgba(0,177,226,0));filter:blur(4px);pointer-events:none}.ds-card--lit .ds-card__icon,.ds-card--lit:hover .ds-card__icon,.ds-card--lit .ds-card__chev{color:var(--ink)}.ds-card--lit .ds-card__sub{color:rgba(11,17,25,.82)}.ds-card--lit:hover{border-top-color:rgba(255,255,255,.8);box-shadow:0 22px 32px -14px rgba(0,0,0,1)}.ds-card--lit:focus-visible{outline-color:var(--text)}"
+    },
+    {
+      "name": "Lower-Third",
+      "kind": "custom",
+      "refersTo": "lower-third",
+      "description": "Broadcast identity plate: dark plate, cyan top rule, ringed avatar breaking the left edge, name + role line.",
+      "html": "<div class=\"ds-lt\"><div class=\"ds-avatar\"><span>MT</span></div><div><p class=\"ds-lt__name\">Marco Túlio</p><p class=\"ds-lt__role\">Empreendedor · IA e Vendas</p></div></div>",
+      "css": ":root{--stage:#0B1119;--bg:#0F1620;--riser:#141E2E;--riser-top:#1A2740;--accent:#00B1E2;--accent-lit:#3CC6EC;--ink:#0B1119;--text:#FFFFFF;--muted:#A9BACB;--edge:rgba(255,255,255,0.07);--edge-lit:rgba(255,255,255,0.16);--pending:#FFC857;--radius:16px;--ease-out:cubic-bezier(0.16,1,0.3,1);--font-display:\"Poppins\",system-ui,sans-serif;--font-body:\"DM Sans\",system-ui,sans-serif}.ds-lt{position:relative;display:flex;align-items:center;min-height:68px;margin:12px 16px;padding:12px 16px 12px 84px;border-radius:6px;background:var(--stage);box-shadow:0 18px 36px -18px rgba(0,0,0,.9);color:var(--text)}.ds-lt::before{content:\"\";position:absolute;top:0;left:84px;right:0;height:3px;border-radius:0 6px 0 0;background:var(--accent)}.ds-avatar{position:absolute;left:-8px;bottom:10px;width:76px;height:76px;border-radius:50%;padding:2px;background:var(--accent)}.ds-avatar span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;border:2px solid var(--stage);background:var(--riser);font-family:var(--font-display);font-weight:600;font-size:22px}.ds-lt__name{margin:0;font-family:var(--font-display);font-weight:600;font-size:25px;line-height:1.15;letter-spacing:-.015em}.ds-lt__role{margin:4px 0 0;font-family:var(--font-display);font-weight:500;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}"
+    },
+    {
+      "name": "Round Button",
+      "kind": "button",
+      "refersTo": "button-round",
+      "description": "48px riser circle for social links and the subpage back button.",
+      "html": "<a class=\"ds-round\" href=\"#\" aria-label=\"Voltar\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m12 19-7-7 7-7\"/><path d=\"M19 12H5\"/></svg></a>",
+      "css": ":root{--stage:#0B1119;--bg:#0F1620;--riser:#141E2E;--riser-top:#1A2740;--accent:#00B1E2;--accent-lit:#3CC6EC;--ink:#0B1119;--text:#FFFFFF;--muted:#A9BACB;--edge:rgba(255,255,255,0.07);--edge-lit:rgba(255,255,255,0.16);--pending:#FFC857;--radius:16px;--ease-out:cubic-bezier(0.16,1,0.3,1);--font-display:\"Poppins\",system-ui,sans-serif;--font-body:\"DM Sans\",system-ui,sans-serif}.ds-round{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--riser);border:1px solid var(--edge);border-top-color:var(--edge-lit);color:var(--text);transition:background-color .2s var(--ease-out),border-color .2s var(--ease-out),transform .2s var(--ease-out)}.ds-round svg{width:20px;height:20px}.ds-round:hover{background:var(--riser-top);border-top-color:rgba(255,255,255,.3);transform:translateY(-1px)}.ds-round:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:50%}"
+    },
+    {
+      "name": "Company Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Subpage riser card with a cyan-outlined Poppins initial when no logo exists.",
+      "html": "<a class=\"ds-card\" href=\"#\"><span class=\"ds-card__icon ds-card__icon--initial\">T</span><span class=\"ds-card__text\"><span class=\"ds-card__title\">The Seller</span><span class=\"ds-card__sub\">CRM, IA e WhatsApp para vender todos os dias</span></span><span class=\"ds-card__chev\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></span></a>",
+      "css": ":root{--stage:#0B1119;--bg:#0F1620;--riser:#141E2E;--riser-top:#1A2740;--accent:#00B1E2;--accent-lit:#3CC6EC;--ink:#0B1119;--text:#FFFFFF;--muted:#A9BACB;--edge:rgba(255,255,255,0.07);--edge-lit:rgba(255,255,255,0.16);--pending:#FFC857;--radius:16px;--ease-out:cubic-bezier(0.16,1,0.3,1);--font-display:\"Poppins\",system-ui,sans-serif;--font-body:\"DM Sans\",system-ui,sans-serif}.ds-card{position:relative;display:flex;align-items:center;gap:14px;min-height:72px;padding:14px 16px;border-radius:var(--radius);background:linear-gradient(180deg,var(--riser-top) 0%,var(--riser) 100%);border:1px solid var(--edge);border-top-color:var(--edge-lit);box-shadow:0 14px 26px -16px rgba(0,0,0,.85);color:var(--text);text-decoration:none;font-family:var(--font-body);transition:transform .25s var(--ease-out),border-color .25s var(--ease-out),box-shadow .25s var(--ease-out)}.ds-card::before{content:\"\";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(190,240,255,.16) 0%,rgba(190,240,255,0) 55%);opacity:0;transition:opacity .25s var(--ease-out);pointer-events:none}.ds-card:hover::before,.ds-card:focus-visible::before{opacity:1}.ds-card:hover{transform:translateY(-3px);border-top-color:rgba(220,248,255,.55);box-shadow:0 26px 30px -14px rgba(0,0,0,1)}.ds-card:active{transform:translateY(0)}.ds-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.ds-card__icon{flex:none;display:grid;place-items:center;width:32px;height:32px;color:var(--accent);transition:color .25s var(--ease-out)}.ds-card:hover .ds-card__icon{color:#8FE3FA}.ds-card__icon svg{width:24px;height:24px}.ds-card__text{flex:1;min-width:0}.ds-card__title{display:block;font-family:var(--font-display);font-weight:600;font-size:16px;line-height:1.3}.ds-card__sub{display:block;margin-top:2px;font-size:14px;color:var(--muted)}.ds-card__chev{flex:none;width:20px;height:20px;color:var(--muted);transition:transform .25s var(--ease-out)}.ds-card:hover .ds-card__chev{transform:translateX(2px)}.ds-card__icon--initial{width:40px;height:40px;border-radius:50%;border:1.5px solid currentColor;font-family:var(--font-display);font-weight:600;font-size:17px}"
+    },
+    {
+      "name": "Pending Tag",
+      "kind": "chip",
+      "refersTo": "pending-tag",
+      "description": "Amber [PREENCHER] marker for content the owner has not supplied; a transient content state.",
+      "html": "<span class=\"ds-pending\">PREENCHER: link</span>",
+      "css": ":root{--stage:#0B1119;--bg:#0F1620;--riser:#141E2E;--riser-top:#1A2740;--accent:#00B1E2;--accent-lit:#3CC6EC;--ink:#0B1119;--text:#FFFFFF;--muted:#A9BACB;--edge:rgba(255,255,255,0.07);--edge-lit:rgba(255,255,255,0.16);--pending:#FFC857;--radius:16px;--ease-out:cubic-bezier(0.16,1,0.3,1);--font-display:\"Poppins\",system-ui,sans-serif;--font-body:\"DM Sans\",system-ui,sans-serif}.ds-pending{display:inline-block;padding:1px 8px;border-radius:999px;font-family:var(--font-body);font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--ink);background:var(--pending)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "One Man, One Spot",
+    "overview": "The page is a keynote stage seen from the front row. It is a dark room with a brand-blue LED backwall glowing low behind the speaker and a single cyan-white follow-spot cone coming down from top centre. Light comes from one place only, so every surface is built the same way: lit top edge, body falling into shadow, shadow cast downward onto the floor. The brightest object below the speaker is the one commercial path, the WhatsApp card \"Quero conversar sobre meu negócio\". Everything else is the supporting programme and stays further back in the dark.\n\nThe system is narrow on purpose: one phone-width column (480px max), one accent, two brand faces, and one authored motion moment when the lights come up on load. The photo of the subject is never tinted. He keeps the light of his own photograph; the spot, haze and LED wash light the space behind and around him. This is how it shipped. An earlier plan clipped a top light onto the subject, and that was removed because it discoloured the real photo.\n\nThe anti-reference is the flat navy Linktree: evenly glowing cards that all compete for attention, with nothing lighting the scene.",
+    "keyCharacteristics": [
+      "Always dark. The ground runs from stage floor (#0B1119) to page (#0F1620), and the only colour-bearing light is the LED wall and the spot.",
+      "One light source, from above. Lit top borders, shadows that fall downward, a light pool spilling under the CTA.",
+      "Broadcast lower-third for identity: a dark plate with a cyan top rule, the ringed avatar breaking its left edge.",
+      "Exactly one lit card per page, and only on the main page.",
+      "One load sequence (spot opens, subject brightens, CTA pool lands last). It does not play under reduced motion.",
+      "Real or nothing: missing content shows as a visible amber [PREENCHER] marker and is never faked."
+    ],
+    "rules": [
+      {
+        "name": "The One Light Rule",
+        "body": "Cyan is light, not decoration. A surface is filled with cyan only when the spot lands on it, and on the main page that is the single WhatsApp card. Every other use of cyan is a thin line, a ring, a small icon or a short label.",
+        "section": "colors"
+      },
+      {
+        "name": "The Untouched Subject Rule",
+        "body": "No overlay, gradient, blend or filter sits on the subject's photo once it has finished loading. The spot cone and haze sit behind him and blend with screen; the only thing in front of him is the floor fade at the base. The one exception is the load animation, which brightens the photo from brightness(0.55) to none and then clears completely.",
+        "section": "colors"
+      },
+      {
+        "name": "The Caption Belongs to the Plate Rule",
+        "body": "Uppercase tracked cyan text exists only as the lower-third's role line, directly under the name it describes. It never sits above a heading or a card group as a section label.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lit-From-Above Rule",
+        "body": "Every new surface takes its highlight on the top edge and casts its shadow downward. No side or bottom highlights, no all-around glows, no shadows offset sideways.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do take every surface's highlight from the top: an edge-lit (rgba(255, 255, 255, 0.16)) top border over edge sides, and a negative-spread shadow falling downward.",
+      "Do keep a single filled-cyan surface per page, the WhatsApp CTA, and give it its floor pool.",
+      "Do leave the subject's photo with its own light; put the spot, haze and wall behind him.",
+      "Do use Poppins 600 for names and titles and DM Sans for reading text, both self-hosted.",
+      "Do show missing content with the amber pending tag instead of inventing it.",
+      "Do keep motion to the single load sequence, with no stagger, and remove it entirely under reduced motion."
+    ],
+    "donts": [
+      "Don't make cards glow evenly or light more than one card with cyan; that is the flat Linktree the system rejects.",
+      "Don't clip a light, gradient or tint onto the subject's photo.",
+      "Don't use uppercase tracked cyan labels anywhere except the lower-third role line.",
+      "Don't add a light theme; the page is always dark.",
+      "Don't add numbers, stamps, credentials, testimonials or logos that the owner has not supplied."
+    ]
+  }
+}
