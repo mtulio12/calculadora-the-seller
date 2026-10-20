@@ -80,14 +80,14 @@ img { display: block; max-width: 100%; }
 
 .hero__photo {
   position: relative;
-  height: 52vh;
-  height: 52svh;
-  min-height: 380px;
-  max-height: 560px;
+  height: 40vh;
+  height: 40svh;
+  min-height: 300px;
+  max-height: 360px;
   overflow: hidden;
   /* a base do retrato se dissolve no fundo, sem faixa de cor */
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 84%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 84%);
 }
 
 /* luz ambiente atrás da cabeça, na mesma linguagem das luzes do fundo */
@@ -95,10 +95,10 @@ img { display: block; max-width: 100%; }
   content: "";
   position: absolute;
   left: 50%;
-  top: 6%;
-  width: 360px;
-  height: 360px;
-  margin-left: -180px;
+  top: 4%;
+  width: 300px;
+  height: 300px;
+  margin-left: -150px;
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(0, 177, 226, 0.34), rgba(0, 96, 171, 0.14) 60%, rgba(0, 96, 171, 0));
   pointer-events: none;
@@ -107,10 +107,10 @@ img { display: block; max-width: 100%; }
 .hero__photo picture,
 .hero__photo img {
   position: relative;
-  width: min(100%, 440px);
+  width: min(78%, 320px);
   height: auto;
   margin: 0 auto;
-  padding-top: 20px;
+  padding-top: 16px;
 }
 
 .hero__placeholder { position: absolute; left: 50%; bottom: 0; height: 80%; transform: translateX(-50%); color: rgba(255, 255, 255, 0.1); }
@@ -118,7 +118,7 @@ img { display: block; max-width: 100%; }
 .hero__id {
   position: relative;
   z-index: 1;
-  margin-top: -92px;
+  margin-top: -64px;
   padding: 0 20px;
 }
 
@@ -151,6 +151,7 @@ img { display: block; max-width: 100%; }
   font-size: 14px;
   line-height: 1.45;
   color: var(--text-soft);
+  text-wrap: balance;
 }
 
 /* ---------- Cartões ---------- */

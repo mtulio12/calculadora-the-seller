@@ -5,7 +5,7 @@
     "url": "[PREENCHER: domínio final, ex.: https://links.marcotulio.com.br]",
     "lang": "pt-BR",
     "title": "Marco Túlio",
-    "description": "Empreendedor. Compartilho o que aprendo construindo 4 empresas.",
+    "description": "Compartilho o que aprendo construindo 4 empresas.",
     "ogImage": "assets/og.jpg"
   },
 
@@ -13,7 +13,7 @@
     "name": "Marco Túlio",
     "verified": true,
     "subtitle": "Empreendedor · IA e Vendas",
-    "bio": "Empreendedor. Compartilho o que aprendo construindo 4 empresas.",
+    "bio": "Compartilho o que aprendo construindo 4 empresas.",
     "heroImage": "assets/foto-topo.png",
     "heroAlt": "Marco Túlio"
   },
@@ -31,7 +31,7 @@
     {
       "id": "whatsapp-negocio",
       "icon": "whatsapp",
-      "title": "Quero conversar sobre meu negócio",
+      "title": "Falar comigo",
       "subtitle": "Me conta seu desafio de vendas",
       "href": "https://app.theseller.com.br/r/ns4hrvd",
       "highlight": true

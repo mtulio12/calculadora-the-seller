@@ -20,6 +20,8 @@ const flag = (where, value) => { pending.push(`${where}: ${value ?? "(vazio)"}`)
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const asset = (p) => existsSync(join(SRC, p));
+// largura e altura de um PNG, lidas do cabeçalho (IHDR)
+const pngSize = (p) => { const b = readFileSync(join(SRC, p)); return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) }; };
 const withScheme = (u) => (/^[a-z]+:/i.test(u) ? u : `https://${u.replace(/^\/+/, "")}`);
 const addUtm = (u, utm) => (utm ? `${u}${u.includes("?") ? "&" : "?"}${utm}` : u);
 const icon = (name) => icons[name] ?? icons.chevron;
@@ -59,12 +61,12 @@ function card({ id, title, subtitle, iconHTML, iconClass = "", highlight, dest }
   return `  <li${highlight ? ' class="cta-wrap"' : ""}>\n    ${el}\n  </li>`;
 }
 
-function picture(path, alt, attrs, prefix = "") {
+function picture(path, alt, attrs, prefix = "", fullWidth = 0) {
   const webp = path.replace(/\.(png|jpe?g)$/i, ".webp");
   // variante menor opcional (<nome>-600.webp) para telas de celular
   const small = webp.replace(/\.webp$/, "-600.webp");
-  const set = asset(small) ? `${esc(prefix + small)} 600w, ${esc(prefix + webp)} 857w` : esc(prefix + webp);
-  const sizes = asset(small) ? ' sizes="(max-width: 560px) 80vw, 340px"' : "";
+  const set = asset(small) && fullWidth ? `${esc(prefix + small)} 600w, ${esc(prefix + webp)} ${fullWidth}w` : esc(prefix + webp);
+  const sizes = asset(small) && fullWidth ? ' sizes="(max-width: 560px) 78vw, 320px"' : "";
   const source = webp !== path && asset(webp) ? `<source srcset="${set}"${sizes} type="image/webp">` : "";
   return `<picture>${source}<img src="${esc(prefix + path)}" alt="${esc(alt)}" ${attrs}></picture>`;
 }
@@ -78,7 +80,8 @@ const SILHOUETTE = `<svg class="hero__placeholder" viewBox="0 0 300 300" fill="c
 // Retrato grande no topo, fundindo no fundo da página.
 function portrait(p) {
   if (asset(p.heroImage)) {
-    const img = picture(p.heroImage, p.heroAlt, 'width="857" height="1200" fetchpriority="high" decoding="async"');
+    const { w, h } = pngSize(p.heroImage);
+    const img = picture(p.heroImage, p.heroAlt, `width="${w}" height="${h}" fetchpriority="high" decoding="async"`, "", w);
     return `<div class="hero__photo">${img}</div>`;
   }
   flag("profile.heroImage (arquivo não encontrado)", `src/${p.heroImage}`);

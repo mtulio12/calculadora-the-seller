@@ -5,7 +5,7 @@ Uso (dentro de links/):
     python tools/prepare-photos.py --topo caminho/foto.jpg [--avatar caminho/avatar.jpg]
 
 Gera em src/assets/:
-    foto-topo.png  + foto-topo.webp   (sem fundo, 1200px de altura)
+    foto-topo.png  + foto-topo.webp   (sem fundo, até 1200px de altura) + foto-topo-600.webp
     avatar.png     + avatar.webp      (quadrado 256px; sem --avatar, sai do rosto da foto recortada)
     og.jpg                           (1200x630 para compartilhamento)
 
@@ -86,6 +86,9 @@ def main():
     hero.thumbnail((10_000, 1200), Image.LANCZOS)
     hero.save(ASSETS / "foto-topo.png", optimize=True)
     hero.save(ASSETS / "foto-topo.webp", quality=80, method=6)
+    small = hero.copy()
+    small.thumbnail((600, 10_000), Image.LANCZOS)  # versão leve para celular
+    small.save(ASSETS / "foto-topo-600.webp", quality=80, method=6)
 
     if a.avatar:
         av = Image.open(a.avatar).convert("RGB")
