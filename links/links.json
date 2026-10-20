@@ -81,14 +81,14 @@
         "id": "alvo3",
         "name": "Alvo3",
         "subtitle": "Consórcio 100% online",
-        "href": "[PREENCHER: site ou Instagram da Alvo3]",
+        "href": "https://alvo3.com.br",
         "logo": "assets/logos/alvo3.png"
       },
       {
         "id": "veelure",
         "name": "Veelure",
         "subtitle": "Clínica de estética em Uberlândia",
-        "href": "[PREENCHER: site ou Instagram da Veelure]",
+        "href": "https://veelure.com.br",
         "logo": "assets/logos/veelure.png"
       }
     ]
