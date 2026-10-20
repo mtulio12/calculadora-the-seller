@@ -18,12 +18,13 @@
     "heroAlt": "Marco Túlio"
   },
 
-  "whatsappNumber": "[PREENCHER: número com DDI e DDD, só dígitos, ex.: 5534999999999]",
+  "_ajudaWhatsapp": "Só é usado por cartões com \"whatsappMessage\" (link wa.me com mensagem pronta). Hoje os cartões usam o link de atendimento da The Seller em \"href\".",
+  "whatsappNumber": "",
 
   "social": [
     { "id": "instagram", "label": "Instagram", "icon": "instagram", "href": "https://www.instagram.com/mtuliobarbosa" },
     { "id": "threads", "label": "Threads", "icon": "threads", "href": "https://www.threads.net/@mtuliobarbosa" },
-    { "id": "youtube", "label": "YouTube", "icon": "youtube", "href": "[PREENCHER: link do canal ou do podcast; se não existir, apague esta linha]" }
+    { "id": "youtube", "label": "YouTube", "icon": "youtube", "href": "https://www.youtube.com/@thesellerdigital" }
   ],
 
   "cards": [
@@ -32,7 +33,7 @@
       "icon": "whatsapp",
       "title": "Quero conversar sobre meu negócio",
       "subtitle": "Me conta seu desafio de vendas",
-      "whatsappMessage": "Oi, Marco, vim do Instagram e quero falar sobre...",
+      "href": "https://app.theseller.com.br/r/ns4hrvd",
       "highlight": true
     },
     {
@@ -40,7 +41,7 @@
       "icon": "play",
       "title": "Assista ao podcast",
       "subtitle": "Conversas sem filtro com empreendedores",
-      "href": "[PREENCHER: playlist do podcast]"
+      "href": "https://www.youtube.com/@thesellerdigital"
     },
     {
       "id": "empresas",
@@ -54,7 +55,7 @@
       "icon": "mic",
       "title": "Palestras e convites",
       "subtitle": "Eventos, podcasts e entrevistas",
-      "href": "[PREENCHER: link do formulário. Para usar o WhatsApp, troque esta linha por \"whatsappMessage\": \"Oi, Marco, quero te convidar para...\"]"
+      "href": "https://app.theseller.com.br/r/ns4hrvd"
     }
   ],
 
