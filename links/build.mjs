@@ -1,5 +1,6 @@
 // Gera o site estático em dist/ a partir de links.json. Sem dependências: `node build.mjs`.
 // Use `node build.mjs --strict` para falhar o build se ainda houver [PREENCHER].
+// Use `--file-links` para links internos com index.html explícito (abrir o arquivo direto no navegador).
 import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync } from "node:fs";
 import { dirname, join, extname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,6 +9,7 @@ import { icons } from "./src/icons.mjs";
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const SRC = join(ROOT, "src");
 const DIST = join(ROOT, "dist");
+const INDEX = process.argv.includes("--file-links") ? "index.html" : "";
 const cfg = JSON.parse(readFileSync(join(ROOT, "links.json"), "utf8"));
 const css = readFileSync(join(SRC, "style.css"), "utf8");
 const js = readFileSync(join(SRC, "app.js"), "utf8");
@@ -28,7 +30,7 @@ const waLink = (msg) => `https://wa.me/${waNumber}?text=${encodeURIComponent(msg
 
 // Resolve o destino de um cartão. Retorna { href, external } ou null se estiver pendente.
 function resolve(item, where, base, utm) {
-  if (item.page) return { href: `${base}${item.page}/`, external: false };
+  if (item.page) return { href: `${base}${item.page}/${INDEX}`, external: false };
   if (item.whatsappMessage !== undefined) {
     if (!waNumber) return flag(`${where} → whatsappNumber`, cfg.whatsappNumber) && null;
     return { href: waLink(item.whatsappMessage), external: true };
@@ -204,7 +206,7 @@ const empresas = layout({
   prefix: "../",
   path: "/empresas/",
   body: `<header class="topbar">
-<a class="back" href="../" aria-label="Voltar para a página inicial" data-track="voltar">${icons.back}</a>
+<a class="back" href="../${INDEX}" aria-label="Voltar para a página inicial" data-track="voltar">${icons.back}</a>
 ${avatar(p, "../", 44)}
 ${nameHTML(p, "p")}
 </header>
