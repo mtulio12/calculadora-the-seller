@@ -55,7 +55,8 @@ function card({ id, title, subtitle, iconHTML, iconClass = "", highlight, dest }
   const el = dest
     ? `<a class="${cls}" ${linkAttrs(dest, id)}>${inner}\n    </a>`
     : `<div class="${cls}" aria-disabled="true">${inner}\n    </div>`;
-  return `  <li>\n    ${el}\n  </li>`;
+  // o CTA fica dentro de uma moldura com a luz girando na borda (como em theseller.com.br/links)
+  return `  <li${highlight ? ' class="cta-wrap"' : ""}>\n    ${el}\n  </li>`;
 }
 
 function picture(path, alt, attrs, prefix = "") {
@@ -68,30 +69,20 @@ function picture(path, alt, attrs, prefix = "") {
   return `<picture>${source}<img src="${esc(prefix + path)}" alt="${esc(alt)}" ${attrs}></picture>`;
 }
 
-function avatar(p, prefix, size) {
-  if (asset(p.avatarImage)) {
-    return `<div class="avatar">${picture(p.avatarImage, p.avatarAlt, `width="${size}" height="${size}" decoding="async"`, prefix)}</div>`;
-  }
-  flag("profile.avatarImage (arquivo não encontrado)", `src/${p.avatarImage}`);
-  const initials = p.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join("");
-  return `<div class="avatar"><span role="img" aria-label="${esc(p.avatarAlt)}">${esc(initials)}</span></div>`;
-}
-
 const nameHTML = (p, tag) =>
   `<${tag} class="name">${esc(p.name)}${p.verified ? `${icons.verified}<span class="sr-only">Perfil verificado</span>` : ""}</${tag}>`;
 
 // Silhueta provisória enquanto a foto recortada não existe.
-const SILHOUETTE = `<svg class="stage__placeholder" viewBox="0 0 300 300" fill="currentColor" aria-hidden="true"><circle cx="150" cy="105" r="58"/><path d="M30 300c4-70 54-118 120-118s116 48 120 118Z"/></svg>`;
+const SILHOUETTE = `<svg class="hero__placeholder" viewBox="0 0 300 300" fill="currentColor" aria-hidden="true"><circle cx="150" cy="105" r="58"/><path d="M30 300c4-70 54-118 120-118s116 48 120 118Z"/></svg>`;
 
-// O palco: painel de LED ao fundo, o canhão de luz e a foto recortada.
-function stage(p) {
-  const beam = '<div class="stage__beam" aria-hidden="true"></div>';
+// Retrato grande no topo, fundindo no fundo da página.
+function portrait(p) {
   if (asset(p.heroImage)) {
     const img = picture(p.heroImage, p.heroAlt, 'width="857" height="1200" fetchpriority="high" decoding="async"');
-    return `<div class="stage">${beam}<div class="stage__photo">${img}</div></div>`;
+    return `<div class="hero__photo">${img}</div>`;
   }
   flag("profile.heroImage (arquivo não encontrado)", `src/${p.heroImage}`);
-  return `<div class="stage">${beam}${SILHOUETTE}${pendingTag("PREENCHER: foto recortada")}</div>`;
+  return `<div class="hero__photo">${SILHOUETTE}${pendingTag("PREENCHER: foto recortada")}</div>`;
 }
 
 function social(list) {
@@ -102,7 +93,7 @@ function social(list) {
     }
     return `  <li><a href="${esc(withScheme(s.href))}" target="_blank" rel="noopener" aria-label="${esc(s.label)} (abre em nova aba)" data-track="social-${esc(s.id)}">${icon(s.icon)}</a></li>`;
   });
-  return `<ul class="social">\n${items.join("\n")}\n</ul>`;
+  return `<ul class="social" aria-label="Redes sociais">\n${items.join("\n")}\n</ul>`;
 }
 
 function analytics(a = {}) {
@@ -148,9 +139,13 @@ ${css.replaceAll("url(fonts/", `url(${prefix}fonts/`)}.sr-only{position:absolute
 ${analytics(cfg.analytics)}
 </head>
 <body>
+<div class="bg" aria-hidden="true"><span class="blob blob--1"></span><span class="blob blob--2"></span><span class="blob blob--3"></span></div>
 <div class="page${prefix ? " page--sub" : ""}">
 ${body}
-<footer class="footer">${esc(cfg.footer)}</footer>
+<footer class="footer">
+${social(cfg.social)}
+<p class="footer__copy">${esc(cfg.footer)}</p>
+</footer>
 </div>
 <script>
 ${js}</script>
@@ -173,18 +168,12 @@ const home = layout({
   title: cfg.site.title,
   prefix: "",
   path: "/",
-  body: `<header>
-${stage(p)}
-<div class="lower-third">
-${avatar(p, "", 76)}
-<div class="lower-third__id">
+  body: `<header class="hero">
+${portrait(p)}
+<div class="hero__id">
 ${nameHTML(p, "h1")}
 <p class="subtitle">${esc(p.subtitle)}</p>
-</div>
-</div>
-<div class="intro">
 <p class="bio">${esc(p.bio)}</p>
-${social(cfg.social)}
 </div>
 </header>
 <main>
@@ -214,7 +203,6 @@ const empresas = layout({
   path: "/empresas/",
   body: `<header class="topbar">
 <a class="back" href="../${INDEX}" aria-label="Voltar para a página inicial" data-track="voltar">${icons.back}</a>
-${avatar(p, "../", 44)}
 ${nameHTML(p, "p")}
 </header>
 <main>
