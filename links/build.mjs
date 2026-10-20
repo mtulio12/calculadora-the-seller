@@ -132,7 +132,7 @@ ${siteUrl ? `<meta property="og:url" content="${esc(siteUrl + path)}">\n` : ""}<
 <link rel="icon" href="${prefix}favicon.svg" type="image/svg+xml">
 <link rel="icon" href="${prefix}favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="${prefix}apple-touch-icon.png">
-<link rel="preload" href="${prefix}fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${prefix}fonts/poppins-700.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 ${css.replaceAll("url(fonts/", `url(${prefix}fonts/`)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
