@@ -1,0 +1,4 @@
+# Na Netlify, defina "Base directory" = links
+[build]
+  command = "node build.mjs"
+  publish = "dist"

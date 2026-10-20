@@ -1,0 +1,106 @@
+{
+  "_ajuda": "Edite só este arquivo. Qualquer valor que comece com [PREENCHER aparece na página com um marcador amarelo e é listado no build. Depois de editar, rode: node build.mjs",
+
+  "site": {
+    "url": "[PREENCHER: domínio final, ex.: https://links.marcotulio.com.br]",
+    "lang": "pt-BR",
+    "title": "Marco Túlio",
+    "description": "Empreendedor. Compartilho o que aprendo construindo 4 empresas.",
+    "ogImage": "assets/og.jpg"
+  },
+
+  "profile": {
+    "name": "Marco Túlio",
+    "verified": true,
+    "subtitle": "Empreendedor · IA e Vendas",
+    "bio": "Empreendedor. Compartilho o que aprendo construindo 4 empresas.",
+    "heroImage": "assets/foto-topo.png",
+    "heroAlt": "Marco Túlio",
+    "avatarImage": "assets/avatar.png",
+    "avatarAlt": "Foto de perfil de Marco Túlio"
+  },
+
+  "whatsappNumber": "[PREENCHER: número com DDI e DDD, só dígitos, ex.: 5534999999999]",
+
+  "social": [
+    { "id": "instagram", "label": "Instagram", "icon": "instagram", "href": "https://www.instagram.com/mtuliobarbosa" },
+    { "id": "threads", "label": "Threads", "icon": "threads", "href": "https://www.threads.net/@mtuliobarbosa" },
+    { "id": "youtube", "label": "YouTube", "icon": "youtube", "href": "[PREENCHER: link do canal ou do podcast; se não existir, apague esta linha]" }
+  ],
+
+  "cards": [
+    {
+      "id": "podcast",
+      "icon": "play",
+      "title": "Assista ao podcast",
+      "subtitle": "Conversas sem filtro com empreendedores",
+      "href": "[PREENCHER: playlist do podcast]"
+    },
+    {
+      "id": "whatsapp-negocio",
+      "icon": "whatsapp",
+      "title": "Quero conversar sobre meu negócio",
+      "subtitle": "Me conta seu desafio de vendas",
+      "whatsappMessage": "Oi, Marco, vim do Instagram e quero falar sobre...",
+      "highlight": true
+    },
+    {
+      "id": "empresas",
+      "icon": "building",
+      "title": "Minhas empresas",
+      "subtitle": "IA, marketing, consórcio e estética",
+      "page": "empresas"
+    },
+    {
+      "id": "palestras",
+      "icon": "mic",
+      "title": "Palestras e convites",
+      "subtitle": "Eventos, podcasts e entrevistas",
+      "href": "[PREENCHER: link do formulário. Para usar o WhatsApp, troque esta linha por \"whatsappMessage\": \"Oi, Marco, quero te convidar para...\"]"
+    }
+  ],
+
+  "companiesPage": {
+    "title": "Minhas empresas",
+    "utm": "utm_source=instagram&utm_medium=bio",
+    "companies": [
+      {
+        "id": "the-seller",
+        "name": "The Seller",
+        "subtitle": "CRM, IA e WhatsApp para vender todos os dias",
+        "href": "https://theseller.com.br",
+        "logo": "assets/logos/the-seller.png"
+      },
+      {
+        "id": "buddx",
+        "name": "BuddX",
+        "subtitle": "Tráfego pago e marketing para quem quer mais clientes",
+        "href": "https://www.buddx.com.br/",
+        "logo": "assets/logos/buddx.png"
+      },
+      {
+        "id": "alvo3",
+        "name": "Alvo3",
+        "subtitle": "Consórcio 100% online",
+        "href": "[PREENCHER: site ou Instagram da Alvo3]",
+        "logo": "assets/logos/alvo3.png"
+      },
+      {
+        "id": "veelure",
+        "name": "Veelure",
+        "subtitle": "Clínica de estética em Uberlândia",
+        "href": "[PREENCHER: site ou Instagram da Veelure]",
+        "logo": "assets/logos/veelure.png"
+      }
+    ]
+  },
+
+  "footer": "© 2026 Marco Túlio",
+
+  "analytics": {
+    "_ajuda": "Desativado por padrão. Use \"plausible\" (preencha plausibleDomain) ou \"ga4\" (preencha ga4Id, ex.: G-XXXXXXX).",
+    "provider": "none",
+    "plausibleDomain": "",
+    "ga4Id": ""
+  }
+}

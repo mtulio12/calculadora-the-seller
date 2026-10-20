@@ -1,0 +1,367 @@
+/* Paleta oficial The Seller (conferida em theseller.com.br, out/2026). Troque aqui. */
+:root {
+  --bg: #0F1620;          /* fundo da página (hero do site da The Seller) */
+  --surface: #16274A;     /* cartões e botões (navy da marca) */
+  --surface-hover: #1B3260;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #00B1E2;      /* azul elétrico: CTA, anel do avatar, subtítulo */
+  --accent-deep: #0060AB; /* azul da marca: gradiente do topo */
+  --ink: #0B1119;         /* texto sobre o --accent */
+  --text: #FFFFFF;
+  --muted: #A9BACB;
+  --pending: #FFC857;     /* marcador [PREENCHER] — some quando tudo estiver preenchido */
+
+  --radius: 16px;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 8px 24px rgba(0, 0, 0, 0.18);
+  --font-display: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--text);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(0, 177, 226, 0.16), transparent 55%),
+    linear-gradient(160deg, var(--surface), var(--bg) 70%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+}
+
+.page {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0 auto;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@media (min-width: 560px) {
+  .page {
+    min-height: auto;
+    margin: 32px auto;
+    border-radius: 28px;
+    border: 1px solid var(--border);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* ---------- Topo com foto ---------- */
+.hero {
+  position: relative;
+  height: 40vh;
+  height: 40svh;
+  min-height: 280px;
+  max-height: 420px;
+  background:
+    radial-gradient(70% 60% at 50% 38%, rgba(0, 177, 226, 0.55), transparent 70%),
+    linear-gradient(180deg, var(--accent-deep) 0%, #0A3E78 45%, var(--bg) 100%);
+  overflow: hidden;
+}
+
+.hero__photo,
+.hero__photo img,
+.hero__placeholder {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  transform: translateX(-50%);
+}
+
+.hero__photo img { object-fit: contain; object-position: bottom center; }
+
+.hero__placeholder { color: rgba(255, 255, 255, 0.16); }
+
+/* Degradê que funde a base da foto ao fundo */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  background: linear-gradient(180deg, rgba(15, 22, 32, 0) 0%, rgba(15, 22, 32, 0.85) 65%, var(--bg) 100%);
+  pointer-events: none;
+}
+
+/* ---------- Identidade ---------- */
+.profile {
+  position: relative;
+  z-index: 1;
+  margin-top: -52px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto;
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--accent);
+  box-shadow: 0 6px 20px rgba(0, 177, 226, 0.25);
+}
+
+.avatar picture { display: contents; }
+
+.avatar img,
+.avatar > span {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid var(--bg);
+  object-fit: cover;
+  background: var(--surface);
+}
+
+.avatar > span {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 30px;
+  letter-spacing: 0.02em;
+}
+
+.name {
+  margin: 14px 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.name svg { width: 22px; height: 22px; flex: none; }
+
+.subtitle {
+  margin: 4px 0 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--accent);
+}
+
+.bio {
+  margin: 10px auto 0;
+  max-width: 34ch;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social a,
+.social span {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.social a:hover { background: var(--surface-hover); transform: translateY(-1px); }
+.social a:focus-visible { border-radius: 50%; }
+.social svg { width: 20px; height: 20px; }
+
+/* ---------- Cartões ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin: 26px 0 0;
+  padding: 0 16px;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 12px 14px 12px 12px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+a.card:hover { background: var(--surface-hover); transform: translateY(-1px); }
+a.card:active { transform: translateY(0); }
+
+.card__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(0, 177, 226, 0.12);
+  color: var(--accent);
+}
+
+.card__icon svg { width: 22px; height: 22px; }
+
+.card__icon--logo { border-radius: 50%; overflow: hidden; background: var(--text); }
+.card__icon--logo img { width: 100%; height: 100%; object-fit: cover; }
+.card__icon--initial {
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.card__text { flex: 1; min-width: 0; }
+
+.card__title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15.5px;
+  line-height: 1.3;
+}
+
+.card__sub {
+  display: -webkit-box;
+  margin-top: 2px;
+  font-size: 13.5px;
+  color: var(--muted);
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.card__chev { flex: none; width: 20px; height: 20px; color: var(--muted); }
+
+/* O único cartão destacado: o caminho comercial */
+.card--highlight {
+  background: var(--accent);
+  border-color: transparent;
+  color: var(--ink);
+  box-shadow: 0 10px 28px rgba(0, 177, 226, 0.28);
+}
+
+a.card--highlight:hover { background: #22BFEA; }
+.card--highlight .card__icon { background: rgba(11, 17, 25, 0.12); color: var(--ink); }
+.card--highlight .card__sub { color: rgba(11, 17, 25, 0.8); }
+.card--highlight .card__chev { color: var(--ink); }
+
+/* ---------- Marcador de pendência ---------- */
+.is-pending { outline: 2px dashed var(--pending); outline-offset: -2px; cursor: not-allowed; }
+.card.is-pending { opacity: 0.92; }
+.pending-tag {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: var(--pending);
+}
+.hero .pending-tag {
+  position: absolute;
+  z-index: 2;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* ---------- Subpágina: cabeçalho compacto ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 16px 0;
+}
+
+.back {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: background-color 0.15s ease;
+}
+.back:hover { background: var(--surface-hover); }
+.back:focus-visible { border-radius: 50%; }
+.back svg { width: 20px; height: 20px; }
+
+.topbar .avatar { width: 44px; height: 44px; margin: 0; padding: 2px; box-shadow: none; }
+.topbar .avatar img, .topbar .avatar > span { border-width: 2px; font-size: 15px; }
+.topbar .name { margin: 0; font-size: 18px; }
+.topbar .name svg { width: 18px; height: 18px; }
+
+.section-title {
+  margin: 28px 20px 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.section-title + .cards { margin-top: 14px; }
+
+/* ---------- Rodapé ---------- */
+.footer {
+  margin-top: auto;
+  padding: 36px 16px 28px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- Entrada suave ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .cards > li { animation: rise 0.42s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 60ms + 80ms); }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

@@ -18,3 +18,7 @@ total do 1º mês e projeções. Botões: **Gerar PDF** (proposta formatada para
 
 Os dados ficam salvos no navegador (localStorage). Preços padrão estão no topo do `<script>`
 (`PLANS`, `ADDONS`, `LISTS`, `SETUP_DEFAULT`); o valor padrão da Gestão Estratégica fica em `defaultState()`.
+
+## Página de links (bio do Instagram)
+
+Em `links/` — veja `links/README.md`.
